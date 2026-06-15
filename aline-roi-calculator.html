@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALINE ROI Calculator</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1B2A4A;
+    --navy-dark: #111d33;
+    --navy-light: #e8ecf3;
+    --red: #C0392B;
+    --red-light: #fbeaea;
+    --gray-bg: #F5F6F8;
+    --gray-border: #dde1e8;
+    --text: #1a1a1a;
+    --text-muted: #5a6270;
+    --green: #0a6e3f;
+    --green-light: #e6f4ed;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background: #ffffff;
+    color: var(--text);
+    margin: 0;
+    padding: 0;
+  }
+
+  .wrap {
+    background: #fff;
+    border: 1px solid var(--gray-border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .widget-header {
+    background: var(--navy);
+    padding: 20px 20px 18px;
+  }
+  h2.wt {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 3px;
+    letter-spacing: .01em;
+  }
+  .wsub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .widget-body {
+    padding: 20px 20px 28px;
+  }
+
+  .w-explainer {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--navy-light);
+    border: 1px solid #c5cfe6;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: var(--navy);
+    line-height: 1.5;
+  }
+  .w-explainer .icon {
+    font-size: 15px;
+    margin-top: 1px;
+    flex-shrink: 0;
+    color: var(--red);
+    font-weight: 700;
+  }
+  .w-explainer strong { font-weight: 700; }
+
+  .slabel {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 10px;
+  }
+
+  .model-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .model-card {
+    border: 1px solid var(--gray-border);
+    border-radius: 8px;
+    padding: 10px 8px 8px;
+    cursor: pointer;
+    background: #fff;
+    transition: border-color .15s, background .15s;
+    text-align: center;
+  }
+  .model-card:hover { border-color: var(--navy); background: var(--navy-light); }
+  .model-card.selected { border: 2px solid var(--red); background: var(--red-light); }
+  .model-card.w-model { border-style: dashed; }
+  .model-card.w-model.selected { border-style: solid; }
+  .mc-name { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+  .mc-price { font-size: 12px; color: var(--text-muted); }
+  .mc-badge {
+    font-size: 10px;
+    font-weight: 700;
+    background: var(--navy);
+    color: #fff;
+    border-radius: 10px;
+    padding: 2px 6px;
+    display: inline-block;
+    margin-top: 5px;
+  }
+  .model-card.selected .mc-badge { background: var(--red); }
+
+  .selected-summary {
+    font-size: 13px;
+    color: var(--navy);
+    background: var(--red-light);
+    border: 1px solid #e8b5b0;
+    border-left: 4px solid var(--red);
+    border-radius: 0 6px 6px 0;
+    padding: 9px 12px;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+
+  .roi-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .roi-row label { font-size: 13px; color: var(--text-muted); min-width: 200px; }
+  .roi-row input[type=range] { flex: 1; min-width: 100px; accent-color: var(--red); }
+  .val { font-size: 13px; font-weight: 700; min-width: 80px; text-align: right; color: var(--navy); }
+
+  .tab-bar { display: flex; gap: 8px; margin-bottom: 18px; }
+  .tab {
+    padding: 7px 18px;
+    border-radius: 6px;
+    border: 1px solid var(--gray-border);
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: inherit;
+    transition: all .15s;
+  }
+  .tab:hover { border-color: var(--navy); color: var(--navy); }
+  .tab.active { background: var(--navy); color: #fff; border-color: var(--navy); font-weight: 700; }
+
+  .pane { display: none; }
+  .pane.active { display: block; }
+
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin: 18px 0;
+  }
+  .metric { background: var(--gray-bg); border-radius: 8px; padding: 14px; border-top: 3px solid var(--navy); }
+  .metric.highlight { border-top-color: var(--red); }
+  .mlabel { font-size: 10px; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .04em; font-weight: 600; }
+  .mval { font-size: 20px; font-weight: 700; color: var(--navy); }
+  .mval.good { color: var(--green); }
+
+  .breakdown {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.9;
+    background: var(--gray-bg);
+    border-left: 4px solid var(--red);
+    padding: 12px 16px;
+    border-radius: 0 6px 6px 0;
+    margin-top: 4px;
+  }
+  .breakdown strong { color: var(--navy); font-weight: 700; }
+
+  .divider { border: none; border-top: 1px solid var(--gray-border); margin: 20px 0; }
+
+  .cta-btn {
+    margin-top: 20px;
+    display: inline-block;
+    padding: 12px 28px;
+    background: var(--red);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: .02em;
+    text-decoration: none;
+    transition: background .15s;
+  }
+  .cta-btn:hover { background: #a93226; }
+
+  @media (max-width: 480px) {
+    .model-grid { grid-template-columns: repeat(2, 1fr); }
+    .roi-row label { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="widget-header">
+    <h2 class="wt">ROI Calculator</h2>
+    <p class="wsub">See how much you save vs. laser tools or chain clamp methods.</p>
+  </div>
+
+  <div class="widget-body">
+
+    <div class="w-explainer">
+      <span class="icon">&#9432;</span>
+      <span><strong>What does "W" mean?</strong> The <strong>W models</strong> (A-750W, A-1000W, A-2000W, A-3000W) include precision dial indicators — everything you need, ready to use right out of the box. Standard models are ideal if you already own indicators.</span>
+    </div>
+
+    <div class="slabel">Select Your Tool Set</div>
+    <div class="model-grid">
+      <div class="model-card" onclick="selectModel(this,920,'A-750',false)" id="mc-750">
+        <div class="mc-name">A-750</div><div class="mc-price">$920</div>
+      </div>
+      <div class="model-card w-model" onclick="selectModel(this,1420,'A-750W',true)" id="mc-750w">
+        <div class="mc-name">A-750W</div><div class="mc-price">$1,420</div><div class="mc-badge">+ Indicators</div>
+      </div>
+      <div class="model-card" onclick="selectModel(this,1345,'A-1000',false)" id="mc-1000">
+        <div class="mc-name">A-1000</div><div class="mc-price">$1,345</div>
+      </div>
+      <div class="model-card w-model" onclick="selectModel(this,1845,'A-1000W',true)" id="mc-1000w">
+        <div class="mc-name">A-1000W</div><div class="mc-price">$1,845</div><div class="mc-badge">+ Indicators</div>
+      </div>
+      <div class="model-card" onclick="selectModel(this,1875,'A-2000',false)" id="mc-2000">
+        <div class="mc-name">A-2000</div><div class="mc-price">$1,875</div>
+      </div>
+      <div class="model-card w-model" onclick="selectModel(this,2375,'A-2000W',true)" id="mc-2000w">
+        <div class="mc-name">A-2000W</div><div class="mc-price">$2,375</div><div class="mc-badge">+ Indicators</div>
+      </div>
+      <div class="model-card" onclick="selectModel(this,2075,'A-3000',false)" id="mc-3000">
+        <div class="mc-name">A-3000</div><div class="mc-price">$2,075</div>
+      </div>
+      <div class="model-card w-model selected" onclick="selectModel(this,2575,'A-3000W',true)" id="mc-3000w">
+        <div class="mc-name">A-3000W</div><div class="mc-price">$2,575</div><div class="mc-badge">+ Indicators</div>
+      </div>
+    </div>
+
+    <div class="selected-summary" id="selected-summary">Selected: A-3000W — $2,575 (includes dial indicators)</div>
+
+    <hr class="divider">
+    <div class="slabel">Your Usage</div>
+
+    <div class="roi-row">
+      <label>Alignments per year</label>
+      <input type="range" id="jobs" min="10" max="500" step="5" value="100">
+      <span class="val" id="jobs-out">100</span>
+    </div>
+    <div class="roi-row">
+      <label>Technician hourly rate</label>
+      <input type="range" id="rate" min="25" max="120" step="5" value="55">
+      <span class="val" id="rate-out">$55/hr</span>
+    </div>
+
+    <hr class="divider">
+    <div class="slabel">Compare Against</div>
+
+    <div class="tab-bar">
+      <button class="tab active" onclick="switchTab('laser',this)">vs. Laser Purchase</button>
+      <button class="tab" onclick="switchTab('chain',this)">vs. Chain Clamp</button>
+    </div>
+
+    <div class="pane active" id="pane-laser">
+      <div class="roi-row">
+        <label>Laser system cost (entry $5K — advanced $15K+)</label>
+        <input type="range" id="laser-cost" min="5000" max="20000" step="500" value="8000">
+        <span class="val" id="laser-out">$8,000</span>
+      </div>
+      <div class="metric-grid" id="laser-metrics"></div>
+      <div class="breakdown" id="laser-breakdown"></div>
+    </div>
+
+    <div class="pane" id="pane-chain">
+      <div class="roi-row">
+        <label>Extra time per job with chain clamps</label>
+        <input type="range" id="chain-extra" min="0.5" max="6" step="0.5" value="2">
+        <span class="val" id="chain-out">2 hrs</span>
+      </div>
+      <div class="metric-grid" id="chain-metrics"></div>
+      <div class="breakdown" id="chain-breakdown"></div>
+    </div>
+
+    <a class="cta-btn" href="https://www.alinemfg.com/tool-sets" target="_blank">Shop Tool Sets →</a>
+
+  </div>
+</div>
+
+<script>
+  let activeTab = 'laser';
+  let selPrice = 2575, selName = 'A-3000W', selIsW = true;
+
+  function selectModel(el, price, name, isW) {
+    document.querySelectorAll('.model-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    selPrice = price; selName = name; selIsW = isW;
+    const note = isW ? ' (includes dial indicators)' : '';
+    document.getElementById('selected-summary').textContent = 'Selected: ' + name + ' — $' + price.toLocaleString() + note;
+    update();
+  }
+
+  function switchTab(tab, el) {
+    activeTab = tab;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('pane-' + tab).classList.add('active');
+    update();
+  }
+
+  function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+  function fmtYr(n) { return n < 1 ? Math.round(n * 12) + ' months' : n.toFixed(1) + ' yrs'; }
+
+  function update() {
+    const jobs = parseInt(document.getElementById('jobs').value);
+    const rate = parseInt(document.getElementById('rate').value);
+    document.getElementById('jobs-out').textContent = jobs;
+    document.getElementById('rate-out').textContent = '$' + rate + '/hr';
+
+    if (activeTab === 'laser') {
+      const laser = parseInt(document.getElementById('laser-cost').value);
+      document.getElementById('laser-out').textContent = fmt(laser);
+      const savings = laser - selPrice;
+      const payback = selPrice / (jobs * rate * 0.5);
+      const yr3 = savings + (jobs * rate * 0.5 * 3);
+      document.getElementById('laser-metrics').innerHTML = `
+        <div class="metric highlight"><div class="mlabel">Upfront savings</div><div class="mval good">${fmt(savings)}</div></div>
+        <div class="metric"><div class="mlabel">Payback period</div><div class="mval">${fmtYr(payback)}</div></div>
+        <div class="metric highlight"><div class="mlabel">3-year total savings</div><div class="mval good">${fmt(yr3)}</div></div>
+        <div class="metric"><div class="mlabel">Cost per alignment</div><div class="mval">${fmt(selPrice / jobs)}</div></div>`;
+      document.getElementById('laser-breakdown').innerHTML = `
+        <strong>${selName}:</strong> ${fmt(selPrice)} &nbsp;·&nbsp; <strong>Laser system:</strong> ${fmt(laser)}<br>
+        Upfront savings: <strong>${fmt(savings)}</strong><br>
+        Time saved per job (est. 30 min vs laser setup): <strong>${fmt(jobs * rate * 0.5)} per year</strong><br>
+        Over 3 years — no software licenses, no calibration, no battery replacements: <strong>${fmt(yr3)} total advantage</strong>`;
+    } else {
+      const extra = parseFloat(document.getElementById('chain-extra').value);
+      document.getElementById('chain-out').textContent = extra + ' hrs';
+      const ann = jobs * extra * rate;
+      const payback = selPrice / ann;
+      const yr3 = ann * 3 - selPrice;
+      document.getElementById('chain-metrics').innerHTML = `
+        <div class="metric highlight"><div class="mlabel">Labor saved per year</div><div class="mval good">${fmt(ann)}</div></div>
+        <div class="metric"><div class="mlabel">Payback period</div><div class="mval">${fmtYr(payback)}</div></div>
+        <div class="metric highlight"><div class="mlabel">3-year net gain</div><div class="mval good">${fmt(yr3)}</div></div>
+        <div class="metric"><div class="mlabel">Hours saved per year</div><div class="mval">${Math.round(jobs * extra)}</div></div>`;
+      document.getElementById('chain-breakdown').innerHTML = `
+        ${jobs} alignments/yr × ${extra} hrs saved × $${rate}/hr = <strong>${fmt(ann)} in labor savings per year</strong><br>
+        ${selName} cost: ${fmt(selPrice)} — paid back in <strong>${fmtYr(payback)}</strong><br>
+        After 3 years, your net gain is <strong>${fmt(yr3)}</strong> — and the tools keep working.`;
+    }
+  }
+
+  ['jobs','rate','laser-cost','chain-extra'].forEach(id => {
+    document.getElementById(id).addEventListener('input', update);
+  });
+  update();
+</script>
+
+</body>
+</html>
