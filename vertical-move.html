@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<base target="_top">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vertical Move — Step by Step | ALINE Manufacturing</title>
 <style>
@@ -429,5 +429,18 @@
   </div>
 </div>
 
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+  document.querySelectorAll("a[href]").forEach(function(a){
+    a.addEventListener("click",function(e){
+      var href=this.getAttribute("href");
+      if(href && href.indexOf("#")<0){
+        e.preventDefault();
+        window.top.location.href=href;
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>
