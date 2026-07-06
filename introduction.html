@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introduction | ALINE Manufacturing</title>
+<style>
+:root{--navy-deep:#0a1a29;--navy:#10243a;--navy-card:#152b44;--steel:#7e8da0;--steel-light:#c2cdd8;--paper:#edf0f2;--red:#bd322c;--red-bright:#dd4b41;--line:rgba(194,205,216,0.14);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--navy-deep);color:var(--paper);font-family:'IBM Plex Sans',Arial,sans-serif;-webkit-font-smoothing:antialiased;font-size:15px;}
+h1,h2,h3{font-family:'Oswald','Arial Narrow',sans-serif;text-transform:uppercase;letter-spacing:0.02em;font-weight:600;}
+.wrap{max-width:880px;margin:0 auto;padding:0 28px;}
+.hero{padding:56px 0 40px;border-bottom:1px solid var(--line);}
+.hero h1{font-size:34px;color:#fff;line-height:1.1;}
+.hero .lede{margin-top:14px;max-width:600px;font-size:16px;line-height:1.65;color:var(--steel-light);}
+.patent-tag{display:inline-block;margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--steel);border:1px solid var(--line);padding:5px 12px;}
+section{padding:48px 0;border-bottom:1px solid var(--line);}
+section:last-of-type{border-bottom:none;}
+.section-label{font-family:'IBM Plex Mono',monospace;color:var(--red-bright);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;}
+section h2{font-size:22px;color:#fff;margin-bottom:16px;}
+.body-text{font-size:15px;line-height:1.75;color:var(--steel-light);max-width:640px;}
+.body-text+.body-text{margin-top:14px;}
+.body-text strong{color:#fff;}
+.diagram-card{background:var(--navy-card);border:1px solid var(--line);padding:18px;margin-top:24px;}
+.diagram-card svg{width:100%;height:auto;display:block;}
+.diagram-card .cap{margin-top:10px;font-size:12px;color:var(--steel);}
+.callout{margin-top:18px;background:var(--navy);border:1px solid var(--line);border-left:2px solid var(--red);padding:14px 18px;font-size:14px;line-height:1.6;color:var(--steel-light);max-width:580px;}
+.callout strong{color:#fff;}
+.step-list{list-style:none;margin-top:18px;max-width:620px;}
+.step-list li{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);}
+.step-list li:last-child{border-bottom:none;}
+.step-list .num{font-family:'IBM Plex Mono',monospace;color:var(--red-bright);font-size:13px;min-width:24px;margin-top:2px;}
+.step-list .txt{font-size:14.5px;line-height:1.7;color:var(--steel-light);}
+.step-list .txt strong{color:#fff;}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:20px;max-width:500px;}
+.stat{background:var(--navy-card);padding:18px 20px;}
+.stat .lbl{font-family:'IBM Plex Mono',monospace;color:var(--red-bright);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;}
+.stat .val{font-size:15px;color:#fff;line-height:1.5;}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px;max-width:700px;}
+.type-card{background:var(--navy-card);border:1px solid var(--line);padding:20px;}
+.type-card .t{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:15px;color:#fff;margin-bottom:10px;}
+.type-card .d{font-size:13.5px;line-height:1.65;color:var(--steel-light);}
+.formula{background:var(--navy-card);border:1px solid var(--line);padding:18px 22px;margin-top:20px;max-width:500px;}
+.formula .lbl{font-family:'IBM Plex Mono',monospace;color:var(--red-bright);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;}
+.formula .eq{font-family:'IBM Plex Mono',monospace;font-size:15px;color:#fff;line-height:1.8;}
+@media(max-width:640px){.hero h1{font-size:26px;}.stat-grid{grid-template-columns:1fr;}.twocol{grid-template-columns:1fr;}}
+
+  .crumb{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--steel);margin-bottom:18px;}
+  .crumb a{color:var(--steel);text-decoration:none;border-bottom:1px solid var(--line);}
+  .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--red);color:var(--red-bright);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;padding:5px 12px;margin-bottom:18px;}
+  .badge .dot{width:5px;height:5px;border-radius:50%;background:var(--red-bright);}
+  .pillnav{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 0;}
+  .pillnav a{display:inline-block;padding:9px 18px;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none;background:var(--navy-card);color:#fff;border:1px solid transparent;}
+  .pillnav a.active{background:transparent;border-color:var(--red);color:var(--red-bright);}
+  .navfoot{margin-top:56px;padding:24px 0 48px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+  .navfoot a{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--red-bright);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="crumb"><a href="https://www.alinemfg.com/introduction">Introduction</a> &nbsp;/&nbsp; Introduction</div>
+    <div class="badge"><span class="dot"></span>ALINE MANUFACTURING USA — INSTRUCTIONS</div>
+    <h1>Introduction</h1>
+    <p class="lede">The reverse dial indicator method is probably the most popular method of shaft alignment because the dial indicators measure the relative position of two shaft centerlines directly — making it easy to illustrate graphically.</p>
+    <div class="patent-tag">Patent # 4,516,328</div>
+        <nav class="pillnav">
+      <a href="https://www.alinemfg.com/introduction" class="active">Introduction</a>
+      <a href="https://www.alinemfg.com/alignment-tolerances">Alignment tolerances</a>
+      <a href="https://www.alinemfg.com/horizontal-move">Horizontal move</a>
+      <a href="https://www.alinemfg.com/vertical-move">Vertical move</a>
+      <a href="https://www.alinemfg.com/soft-foot-check">Soft foot check</a>
+      <a href="https://www.alinemfg.com/sag-check">Sag check</a>
+      <a href="https://www.alinemfg.com/thermal-movement">Thermal movement</a>
+      <a href="https://www.alinemfg.com/_files/ugd/c57b13_f2743713b7ee46d8b6f3de130de0c445.xls?dn=Ai%20Line%20Reverse%20Dial%20Alignment%20Excel%20Program.xls">Software download</a>
+    </nav>
+  </div>
+</header>
+
+
+<section>
+  <div class="wrap">
+    <div class="section-label">Concepts</div>
+    <h2>What is reverse alignment?</h2>
+    <p class="body-text">Reverse alignment is the measurement of the axis, or centerline, of one shaft to the relative position of the axis of an opposing shaft centerline. This measurement can be projected the full length of both shafts for proper positioning when you need to allow for thermal movement.</p>
+    <p class="body-text">The measurement also shows the position of the shaft centerlines at the coupling flex planes, for the purpose of selecting an allowable tolerance. The centerline measurements are taken in both horizontal and vertical planes.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">The Graphical Method</div>
+    <h2>Learning how to graph plot</h2>
+    <p class="body-text">Graphical alignment shows the relative position of the two shaft centerlines on square grid graph paper. Always view the equipment the same way it appears on the graph plot — <strong>Fixed on the left, Moveable on the right</strong> — both vertically and horizontally.</p>
+    <div class="twocol">
+      <div class="diagram-card"><svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+  <defs><pattern id="ge" width="17" height="17" patternUnits="userSpaceOnUse"><path d="M 17 0 L 0 0 0 17" fill="none" stroke="#c2cdd8" stroke-width="0.4" opacity="0.18"/></pattern></defs>
+  <rect width="700" height="300" fill="#0a1a29"/><rect width="700" height="300" fill="url(#ge)"/>
+  <g stroke="#c2cdd8" stroke-width="1.6" fill="none">
+    <rect x="40" y="188" width="150" height="8" rx="1"/>
+    <rect x="58" y="168" width="34" height="22" fill="#c2cdd8" opacity="0.85"/>
+    <circle cx="135" cy="136" r="44"/>
+    <circle cx="135" cy="136" r="7" stroke="#7e8da0" stroke-width="1.2"/>
+    <rect x="82" y="160" width="24" height="18"/>
+    <path d="M 178 118 L 178 154 L 212 144 L 212 128 Z"/>
+  </g>
+  <g stroke="#7e8da0" stroke-width="1.3" fill="none">
+    <line x1="222" y1="122" x2="222" y2="150"/><line x1="234" y1="118" x2="234" y2="154"/>
+    <line x1="246" y1="118" x2="246" y2="154"/><line x1="258" y1="122" x2="258" y2="150"/>
+  </g>
+  <line x1="40" y1="136" x2="660" y2="136" stroke="#7e8da0" stroke-width="1.6"/>
+  <g stroke="#c2cdd8" stroke-width="1.6" fill="none">
+    <rect x="452" y="188" width="186" height="8" rx="1"/>
+    <rect x="478" y="170" width="24" height="18" fill="#c2cdd8" opacity="0.85"/>
+    <rect x="596" y="170" width="24" height="18" fill="#c2cdd8" opacity="0.85"/>
+    <rect x="460" y="92" width="170" height="88" rx="10"/>
+    <rect x="528" y="74" width="30" height="20"/>
+  </g>
+  <g stroke="#7e8da0" stroke-width="1" opacity="0.8">
+    <line x1="476" y1="96" x2="476" y2="178"/><line x1="492" y1="96" x2="492" y2="178"/>
+    <line x1="508" y1="96" x2="508" y2="178"/><line x1="582" y1="96" x2="582" y2="178"/>
+    <line x1="598" y1="96" x2="598" y2="178"/><line x1="614" y1="96" x2="614" y2="178"/>
+  </g>
+  <text x="135" y="142" fill="#4f8fdb" font-family="IBM Plex Mono, monospace" font-size="17" font-weight="700" text-anchor="middle">FIXED</text>
+  <text x="545" y="142" fill="#dd4b41" font-family="IBM Plex Mono, monospace" font-size="17" font-weight="700" text-anchor="middle">MOVEABLE</text>
+  <g stroke="#7e8da0" stroke-width="1" stroke-dasharray="3 3">
+    <line x1="260" y1="188" x2="260" y2="248"/><line x1="400" y1="156" x2="400" y2="248"/>
+    <line x1="478" y1="188" x2="478" y2="248"/><line x1="620" y1="188" x2="620" y2="248"/>
+  </g>
+  <g stroke="#7e8da0" stroke-width="1.2">
+    <line x1="260" y1="234" x2="400" y2="234"/><line x1="400" y1="234" x2="478" y2="234"/>
+    <line x1="478" y1="234" x2="620" y2="234"/>
+  </g>
+  <text x="330" y="228" fill="#dd4b41" font-family="IBM Plex Mono, monospace" font-size="17" font-weight="700" text-anchor="middle">A</text>
+  <text x="439" y="228" fill="#dd4b41" font-family="IBM Plex Mono, monospace" font-size="17" font-weight="700" text-anchor="middle">B</text>
+  <text x="549" y="228" fill="#dd4b41" font-family="IBM Plex Mono, monospace" font-size="17" font-weight="700" text-anchor="middle">C</text>
+</svg><div class="cap">Equipment view — Fixed (left) · Moveable (right)</div></div>
+      <div class="diagram-card"><svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+  <defs><pattern id="gfm" width="17" height="17" patternUnits="userSpaceOnUse"><path d="M 17 0 L 0 0 0 17" fill="none" stroke="#c2cdd8" stroke-width="0.4" opacity="0.18"/></pattern></defs>
+  <rect width="700" height="300" fill="#0a1a29"/><rect width="700" height="300" fill="url(#gfm)"/>
+  <g stroke="#c2cdd8" stroke-width="1.6" fill="none">
+    <rect x="40" y="188" width="150" height="8" rx="1"/>
+    <rect x="58" y="168" width="34" height="22" fill="#c2cdd8" opacity="0.85"/>
+    <circle cx="135" cy="136" r="44"/>
+    <circle cx="135" cy="136" r="7" stroke="#7e8da0" stroke-width="1.2"/>
+    <rect x="82" y="160" width="24" height="18"/>
+    <path d="M 178 118 L 178 154 L 212 144 L 212 128 Z"/>
+  </g>
+  <g stroke="#7e8da0" stroke-width="1.3" fill="none">
+    <line x1="222" y1="122" x2="222" y2="150"/><line x1="234" y1="118" x2="234" y2="154"/>
+    <line x1="246" y1="118" x2="246" y2="154"/><line x1="258" y1="122" x2="258" y2="150"/>
+  </g>
+  <line x1="40" y1="136" x2="660" y2="136" stroke="#7e8da0" stroke-width="1.6"/>
+  <g stroke="#c2cdd8" stroke-width="1.6" fill="none">
+    <rect x="452" y="188" width="186" height="8" rx="1"/>
+    <rect x="478" y="170" width="24" height="18" fill="#c2cdd8" opacity="0.85"/>
+    <rect x="596" y="170" width="24" height="18" fill="#c2cdd8" opacity="0.85"/>
+    <rect x="460" y="92" width="170" height="88" rx="10"/>
+    <rect x="528" y="74" width="30" height="20"/>
+  </g>
+  <g stroke="#7e8da0" stroke-width="1" opacity="0.8">
+    <line x1="476" y1="96" x2="476" y2="178"/><line x1="492" y1="96" x2="492" y2="178"/>
+    <line x1="508" y1="96" x2="508" y2="178"/><line x1="582" y1="96" x2="582" y2="178"/>
+    <line x1="598" y1="96" x2="598" y2="178"/><line x1="614" y1="96" x2="614" y2="178"/>
+  </g>
+  <circle cx="260" cy="136" r="15" fill="#0a1a29" stroke="#4f8fdb" stroke-width="1.8"/><text x="260" y="142" fill="#4f8fdb" font-family="IBM Plex Mono, monospace" font-size="16" font-weight="700" text-anchor="middle">F</text>
+  <circle cx="400" cy="136" r="15" fill="#0a1a29" stroke="#dd4b41" stroke-width="1.8"/><text x="400" y="142" fill="#dd4b41" font-family="IBM Plex Mono, monospace" font-size="16" font-weight="700" text-anchor="middle">M</text>
+  <g stroke="#7e8da0" stroke-width="1" stroke-dasharray="3 3">
+    <line x1="260" y1="188" x2="260" y2="248"/><line x1="400" y1="156" x2="400" y2="248"/>
+    <line x1="478" y1="188" x2="478" y2="248"/><line x1="620" y1="188" x2="620" y2="248"/>
+  </g>
+  <g stroke="#7e8da0" stroke-width="1.2">
+    <line x1="260" y1="234" x2="400" y2="234"/><line x1="400" y1="234" x2="478" y2="234"/>
+    <line x1="478" y1="234" x2="620" y2="234"/>
+  </g>
+  <text x="330" y="228" fill="#dd4b41" font-family="IBM Plex Mono, monospace" font-size="17" font-weight="700" text-anchor="middle">A</text>
+  <text x="439" y="228" fill="#dd4b41" font-family="IBM Plex Mono, monospace" font-size="17" font-weight="700" text-anchor="middle">B</text>
+  <text x="549" y="228" fill="#dd4b41" font-family="IBM Plex Mono, monospace" font-size="17" font-weight="700" text-anchor="middle">C</text>
+</svg><div class="cap">Shaft centerline measurement view</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">Setup</div>
+    <h2>Taking measurements</h2>
+    <p class="body-text">Before plotting, record three key distances from your bracket setup.</p>
+    <table style="width:100%;max-width:480px;border-collapse:collapse;margin-top:18px;background:var(--navy-card);border:1px solid var(--line);">
+      <tr style="border-bottom:1px solid var(--line);"><td style="padding:12px 16px;font-family:IBM Plex Mono,monospace;color:var(--red-bright);font-size:18px;font-weight:700;width:40px;">A</td><td style="padding:12px 16px;font-size:14px;color:var(--steel-light);">Distance between indicators</td><td style="padding:12px 16px;font-family:IBM Plex Mono,monospace;color:#fff;font-size:15px;text-align:right;">10"</td></tr>
+      <tr style="border-bottom:1px solid var(--line);"><td style="padding:12px 16px;font-family:IBM Plex Mono,monospace;color:var(--red-bright);font-size:18px;font-weight:700;">B</td><td style="padding:12px 16px;font-size:14px;color:var(--steel-light);">Distance between indicator and front foot</td><td style="padding:12px 16px;font-family:IBM Plex Mono,monospace;color:#fff;font-size:15px;text-align:right;">5"</td></tr>
+      <tr><td style="padding:12px 16px;font-family:IBM Plex Mono,monospace;color:var(--red-bright);font-size:18px;font-weight:700;">C</td><td style="padding:12px 16px;font-size:14px;color:var(--steel-light);">Distance between feet</td><td style="padding:12px 16px;font-family:IBM Plex Mono,monospace;color:#fff;font-size:15px;text-align:right;">11"</td></tr>
+    </table>
+    <div class="callout"><strong>Note:</strong> Always mark the plus and minus signs on the graph to eliminate confusion about direction.</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">Plotting</div>
+    <h2>Graph paper layout</h2>
+    <p class="body-text">Once your measurements are recorded, lay them out on graph paper marking indicator positions and feet positions, including their + and − signs, before plotting your indicator readings.</p>
+    <div class="diagram-card" style="max-width:640px;"><svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg">
+  <defs><pattern id="gp" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="#c2cdd8" stroke-width="0.4" opacity="0.3"/></pattern></defs>
+  <rect width="800" height="280" fill="#0a1a29"/><rect width="800" height="280" fill="url(#gp)"/>
+  <g stroke="#c2cdd8" stroke-width="1.3">
+    <line x1="220" y1="25" x2="220" y2="258"/><line x1="320" y1="25" x2="320" y2="258"/>
+    <line x1="370" y1="25" x2="370" y2="258"/><line x1="590" y1="25" x2="590" y2="258"/>
+  </g>
+  <g stroke="#c2cdd8" stroke-width="1.4">
+    <line x1="222" y1="44" x2="318" y2="44"/><line x1="322" y1="44" x2="368" y2="44"/>
+    <line x1="372" y1="44" x2="588" y2="44"/>
+  </g>
+  <text x="270" y="38" fill="#c2cdd8" font-family="IBM Plex Mono, monospace" font-size="20" font-weight="700" text-anchor="middle">10</text>
+  <text x="345" y="38" fill="#c2cdd8" font-family="IBM Plex Mono, monospace" font-size="20" font-weight="700" text-anchor="middle">5</text>
+  <text x="480" y="38" fill="#c2cdd8" font-family="IBM Plex Mono, monospace" font-size="20" font-weight="700" text-anchor="middle">11</text>
+  <line x1="70" y1="158" x2="220" y2="158" stroke="#4f8fdb" stroke-width="3" stroke-dasharray="10 6"/>
+  <circle cx="220" cy="128" r="19" fill="#0a1a29" stroke="#4f8fdb" stroke-width="2.8"/>
+  <line x1="209" y1="128" x2="231" y2="128" stroke="#4f8fdb" stroke-width="2.8"/>
+  <line x1="220" y1="117" x2="220" y2="139" stroke="#4f8fdb" stroke-width="2.8"/>
+  <circle cx="220" cy="188" r="19" fill="#0a1a29" stroke="#4f8fdb" stroke-width="2.8"/>
+  <line x1="209" y1="188" x2="231" y2="188" stroke="#4f8fdb" stroke-width="2.8"/>
+  <line x1="320" y1="158" x2="600" y2="158" stroke="#dd4b41" stroke-width="3"/>
+  <circle cx="320" cy="128" r="19" fill="#0a1a29" stroke="#dd4b41" stroke-width="2.8"/>
+  <line x1="309" y1="128" x2="331" y2="128" stroke="#dd4b41" stroke-width="2.8"/>
+  <circle cx="320" cy="188" r="19" fill="#0a1a29" stroke="#dd4b41" stroke-width="2.8"/>
+  <line x1="309" y1="188" x2="331" y2="188" stroke="#dd4b41" stroke-width="2.8"/>
+  <line x1="320" y1="177" x2="320" y2="199" stroke="#dd4b41" stroke-width="2.8"/>
+  <g stroke="#c2cdd8" stroke-width="2.2" fill="none" stroke-linejoin="round">
+    <path d="M 370 146 L 388 176 L 352 176 Z"/>
+    <path d="M 590 146 L 608 176 L 572 176 Z"/>
+  </g>
+</svg><div class="cap">Each horizontal square = 1.0" of shaft distance &nbsp;·&nbsp; Each vertical square = 0.001" of indicator offset</div></div>
+    <div style="display:flex;gap:14px;margin-top:28px;flex-wrap:wrap;">
+      <a href="https://www.alinemfg.com/horizontal-move" style="display:inline-block;padding:12px 24px;background:var(--red);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:13px;text-decoration:none;letter-spacing:0.05em;">Horizontal Move →</a>
+      <a href="https://www.alinemfg.com/vertical-move" style="display:inline-block;padding:12px 24px;background:var(--navy-card);border:1px solid var(--line);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:13px;text-decoration:none;letter-spacing:0.05em;">Vertical Move →</a>
+    </div>
+  </div>
+</section>
+
+
+</body>
+</html>

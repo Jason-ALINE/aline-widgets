@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soft Foot Check | ALINE Manufacturing</title>
+<style>
+:root{--navy-deep:#0a1a29;--navy:#10243a;--navy-card:#152b44;--steel:#7e8da0;--steel-light:#c2cdd8;--paper:#edf0f2;--red:#bd322c;--red-bright:#dd4b41;--line:rgba(194,205,216,0.14);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--navy-deep);color:var(--paper);font-family:'IBM Plex Sans',Arial,sans-serif;-webkit-font-smoothing:antialiased;font-size:15px;}
+h1,h2,h3{font-family:'Oswald','Arial Narrow',sans-serif;text-transform:uppercase;letter-spacing:0.02em;font-weight:600;}
+.wrap{max-width:880px;margin:0 auto;padding:0 28px;}
+.hero{padding:56px 0 40px;border-bottom:1px solid var(--line);}
+.hero h1{font-size:34px;color:#fff;line-height:1.1;}
+.hero .lede{margin-top:14px;max-width:600px;font-size:16px;line-height:1.65;color:var(--steel-light);}
+.patent-tag{display:inline-block;margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--steel);border:1px solid var(--line);padding:5px 12px;}
+section{padding:48px 0;border-bottom:1px solid var(--line);}
+section:last-of-type{border-bottom:none;}
+.section-label{font-family:'IBM Plex Mono',monospace;color:var(--red-bright);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;}
+section h2{font-size:22px;color:#fff;margin-bottom:16px;}
+.body-text{font-size:15px;line-height:1.75;color:var(--steel-light);max-width:640px;}
+.body-text+.body-text{margin-top:14px;}
+.body-text strong{color:#fff;}
+.diagram-card{background:var(--navy-card);border:1px solid var(--line);padding:18px;margin-top:24px;}
+.diagram-card svg{width:100%;height:auto;display:block;}
+.diagram-card .cap{margin-top:10px;font-size:12px;color:var(--steel);}
+.callout{margin-top:18px;background:var(--navy);border:1px solid var(--line);border-left:2px solid var(--red);padding:14px 18px;font-size:14px;line-height:1.6;color:var(--steel-light);max-width:580px;}
+.callout strong{color:#fff;}
+.step-list{list-style:none;margin-top:18px;max-width:620px;}
+.step-list li{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);}
+.step-list li:last-child{border-bottom:none;}
+.step-list .num{font-family:'IBM Plex Mono',monospace;color:var(--red-bright);font-size:13px;min-width:24px;margin-top:2px;}
+.step-list .txt{font-size:14.5px;line-height:1.7;color:var(--steel-light);}
+.step-list .txt strong{color:#fff;}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:20px;max-width:500px;}
+.stat{background:var(--navy-card);padding:18px 20px;}
+.stat .lbl{font-family:'IBM Plex Mono',monospace;color:var(--red-bright);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;}
+.stat .val{font-size:15px;color:#fff;line-height:1.5;}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px;max-width:700px;}
+.type-card{background:var(--navy-card);border:1px solid var(--line);padding:20px;}
+.type-card .t{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:15px;color:#fff;margin-bottom:10px;}
+.type-card .d{font-size:13.5px;line-height:1.65;color:var(--steel-light);}
+.formula{background:var(--navy-card);border:1px solid var(--line);padding:18px 22px;margin-top:20px;max-width:500px;}
+.formula .lbl{font-family:'IBM Plex Mono',monospace;color:var(--red-bright);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;}
+.formula .eq{font-family:'IBM Plex Mono',monospace;font-size:15px;color:#fff;line-height:1.8;}
+@media(max-width:640px){.hero h1{font-size:26px;}.stat-grid{grid-template-columns:1fr;}.twocol{grid-template-columns:1fr;}}
+
+  .crumb{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--steel);margin-bottom:18px;}
+  .crumb a{color:var(--steel);text-decoration:none;border-bottom:1px solid var(--line);}
+  .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--red);color:var(--red-bright);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;padding:5px 12px;margin-bottom:18px;}
+  .badge .dot{width:5px;height:5px;border-radius:50%;background:var(--red-bright);}
+  .pillnav{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 0;}
+  .pillnav a{display:inline-block;padding:9px 18px;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none;background:var(--navy-card);color:#fff;border:1px solid transparent;}
+  .pillnav a.active{background:transparent;border-color:var(--red);color:var(--red-bright);}
+  .navfoot{margin-top:56px;padding:24px 0 48px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+  .navfoot a{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--red-bright);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="crumb"><a href="https://www.alinemfg.com/introduction">Introduction</a> &nbsp;/&nbsp; Soft Foot Check</div>
+    <div class="badge"><span class="dot"></span>ALINE MANUFACTURING USA — INSTRUCTIONS</div>
+    <h1>Soft Foot Check</h1>
+    <p class="lede">A soft foot condition exists when one of the machine's feet does not sit flat on the base. It must be corrected before alignment — tightening the hold-down bolts over a soft foot distorts the machine casing and invalidates every reading.</p>
+        <nav class="pillnav">
+      <a href="https://www.alinemfg.com/introduction">Introduction</a>
+      <a href="https://www.alinemfg.com/alignment-tolerances">Alignment tolerances</a>
+      <a href="https://www.alinemfg.com/horizontal-move">Horizontal move</a>
+      <a href="https://www.alinemfg.com/vertical-move">Vertical move</a>
+      <a href="https://www.alinemfg.com/soft-foot-check" class="active">Soft foot check</a>
+      <a href="https://www.alinemfg.com/sag-check">Sag check</a>
+      <a href="https://www.alinemfg.com/thermal-movement">Thermal movement</a>
+      <a href="https://www.alinemfg.com/_files/ugd/c57b13_f2743713b7ee46d8b6f3de130de0c445.xls?dn=Ai%20Line%20Reverse%20Dial%20Alignment%20Excel%20Program.xls">Software download</a>
+    </nav>
+  </div>
+</header>
+
+
+<section>
+  <div class="wrap">
+    <div class="section-label">Types of Soft Foot</div>
+    <h2>Two forms of soft foot</h2>
+    <div class="twocol">
+      <div class="type-card">
+        <div class="t">Angular Soft Foot</div>
+        <div class="d">One corner of the foot is elevated — the foot only contacts the base on part of its surface and rocks when the bolt is tightened.</div>
+      </div>
+      <div class="type-card">
+        <div class="t">Parallel Soft Foot</div>
+        <div class="d">The entire foot is elevated above the base by a uniform gap. Corrected by shimming with stock of even thickness under the full foot.</div>
+      </div>
+    </div>
+    <div class="diagram-card" style="max-width:780px;margin-top:28px;"><svg viewBox="0 0 900 310" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="7" stroke="#c2cdd8" stroke-width="1.2" opacity="0.28"/>
+    </pattern>
+    <pattern id="sg" width="17" height="17" patternUnits="userSpaceOnUse">
+      <path d="M 17 0 L 0 0 0 17" fill="none" stroke="#c2cdd8" stroke-width="0.4" opacity="0.18"/>
+    </pattern>
+  </defs>
+  <rect width="900" height="310" fill="#0a1a29"/>
+  <rect width="900" height="310" fill="url(#sg)"/>
+
+  <!-- LABELS -->
+  <text x="215" y="36" fill="#fff" font-family="Oswald, Arial Narrow, sans-serif" font-size="16" font-weight="600" text-anchor="middle" letter-spacing="1">ANGULAR SOFT FOOT</text>
+  <text x="215" y="56" fill="#7e8da0" font-family="IBM Plex Mono, monospace" font-size="11" text-anchor="middle">One corner elevated — foot rocks</text>
+  <text x="680" y="36" fill="#fff" font-family="Oswald, Arial Narrow, sans-serif" font-size="16" font-weight="600" text-anchor="middle" letter-spacing="1">PARALLEL SOFT FOOT</text>
+  <text x="680" y="56" fill="#7e8da0" font-family="IBM Plex Mono, monospace" font-size="11" text-anchor="middle">Entire foot elevated uniformly</text>
+
+  <!-- === ANGULAR SOFT FOOT (LEFT) === -->
+  <!-- base / ground -->
+  <rect x="40" y="222" width="350" height="28" fill="#152b44" stroke="#c2cdd8" stroke-width="1.4"/>
+  <rect x="40" y="222" width="350" height="28" fill="url(#hatch)"/>
+  <!-- foot body — flat left side contacts base, right side angled up -->
+  <polygon points="60,168 60,222 290,222 290,182 220,168" fill="#1b3650" stroke="#c2cdd8" stroke-width="1.8"/>
+  <!-- angled gap on right (red highlight) -->
+  <polygon points="290,182 290,222 360,222 360,222" fill="#dd4b41" opacity="0.0"/>
+  <line x1="290" y1="182" x2="360" y2="222" stroke="#dd4b41" stroke-width="2" stroke-dasharray="6 3"/>
+  <!-- gap dimension line -->
+  <line x1="370" y1="182" x2="370" y2="222" stroke="#c2cdd8" stroke-width="1"/>
+  <line x1="365" y1="182" x2="375" y2="182" stroke="#c2cdd8" stroke-width="1"/>
+  <line x1="365" y1="222" x2="375" y2="222" stroke="#c2cdd8" stroke-width="1"/>
+  <text x="392" y="207" fill="#dd4b41" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="700">gap</text>
+  <!-- bolt: hex head + shank (no nut) -->
+  <!-- hex head -->
+  <rect x="148" y="146" width="38" height="17" rx="2" fill="#8a98a6" stroke="#c2cdd8" stroke-width="1.3"/>
+  <line x1="148" y1="151" x2="186" y2="151" stroke="#c2cdd8" stroke-width="0.8" opacity="0.5"/>
+  <line x1="148" y1="157" x2="186" y2="157" stroke="#c2cdd8" stroke-width="0.8" opacity="0.5"/>
+  <!-- shank -->
+  <rect x="157" y="163" width="20" height="62" fill="#7e8da0" stroke="#c2cdd8" stroke-width="1"/>
+  <!-- thread lines -->
+  <line x1="157" y1="171" x2="177" y2="171" stroke="#c2cdd8" stroke-width="0.7" opacity="0.4"/>
+  <line x1="157" y1="179" x2="177" y2="179" stroke="#c2cdd8" stroke-width="0.7" opacity="0.4"/>
+  <line x1="157" y1="187" x2="177" y2="187" stroke="#c2cdd8" stroke-width="0.7" opacity="0.4"/>
+  <line x1="157" y1="195" x2="177" y2="195" stroke="#c2cdd8" stroke-width="0.7" opacity="0.4"/>
+  <line x1="157" y1="203" x2="177" y2="203" stroke="#c2cdd8" stroke-width="0.7" opacity="0.4"/>
+  <line x1="157" y1="211" x2="177" y2="211" stroke="#c2cdd8" stroke-width="0.7" opacity="0.4"/>
+  <line x1="157" y1="219" x2="177" y2="219" stroke="#c2cdd8" stroke-width="0.7" opacity="0.4"/>
+  <!-- tightening force arrow -->
+  <line x1="167" y1="126" x2="167" y2="144" stroke="#dd4b41" stroke-width="2.8"/>
+  <polygon points="159,144 167,126 175,144" fill="#dd4b41"/>
+  <!-- contact point indicator -->
+  <circle cx="60" cy="222" r="5" fill="#4f8fdb"/>
+  <text x="50" y="248" fill="#4f8fdb" font-family="IBM Plex Mono, monospace" font-size="10" text-anchor="middle">CONTACT</text>
+
+  <!-- === PARALLEL SOFT FOOT (RIGHT) === -->
+  <!-- base / ground -->
+  <rect x="500" y="222" width="360" height="28" fill="#152b44" stroke="#c2cdd8" stroke-width="1.4"/>
+  <rect x="500" y="222" width="360" height="28" fill="url(#hatch)"/>
+  <!-- foot body — sits flat but uniformly off base -->
+  <rect x="520" y="168" width="320" height="44" fill="#1b3650" stroke="#c2cdd8" stroke-width="1.8"/>
+  <!-- uniform gap between foot bottom and base -->
+  <rect x="520" y="212" width="320" height="10" fill="#dd4b41" opacity="0.22"/>
+  <line x1="520" y1="212" x2="840" y2="212" stroke="#dd4b41" stroke-width="1.8" stroke-dasharray="6 3"/>
+  <!-- gap dimension lines left and right -->
+  <line x1="510" y1="212" x2="510" y2="222" stroke="#c2cdd8" stroke-width="1"/>
+  <line x1="505" y1="212" x2="515" y2="212" stroke="#c2cdd8" stroke-width="1"/>
+  <line x1="505" y1="222" x2="515" y2="222" stroke="#c2cdd8" stroke-width="1"/>
+  <line x1="850" y1="212" x2="850" y2="222" stroke="#c2cdd8" stroke-width="1"/>
+  <line x1="845" y1="212" x2="855" y2="212" stroke="#c2cdd8" stroke-width="1"/>
+  <line x1="845" y1="222" x2="855" y2="222" stroke="#c2cdd8" stroke-width="1"/>
+  <text x="680" y="208" fill="#dd4b41" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="700" text-anchor="middle">uniform gap</text>
+  <!-- bolt: hex head + shank (no nut) -->
+  <!-- hex head -->
+  <rect x="660" y="146" width="38" height="17" rx="2" fill="#8a98a6" stroke="#c2cdd8" stroke-width="1.3"/>
+  <line x1="660" y1="151" x2="698" y2="151" stroke="#c2cdd8" stroke-width="0.8" opacity="0.5"/>
+  <line x1="660" y1="157" x2="698" y2="157" stroke="#c2cdd8" stroke-width="0.8" opacity="0.5"/>
+  <!-- shank -->
+  <rect x="669" y="163" width="20" height="62" fill="#7e8da0" stroke="#c2cdd8" stroke-width="1"/>
+  <!-- thread lines -->
+  <line x1="669" y1="171" x2="689" y2="171" stroke="#c2cdd8" stroke-width="0.7" opacity="0.4"/>
+  <line x1="669" y1="179" x2="689" y2="179" stroke="#c2cdd8" stroke-width="0.7" opacity="0.4"/>
+  <line x1="669" y1="187" x2="689" y2="187" stroke="#c2cdd8" stroke-width="0.7" opacity="0.4"/>
+  <line x1="669" y1="195" x2="689" y2="195" stroke="#c2cdd8" stroke-width="0.7" opacity="0.4"/>
+  <line x1="669" y1="203" x2="689" y2="203" stroke="#c2cdd8" stroke-width="0.7" opacity="0.4"/>
+  <line x1="669" y1="211" x2="689" y2="211" stroke="#c2cdd8" stroke-width="0.7" opacity="0.4"/>
+  <line x1="669" y1="219" x2="689" y2="219" stroke="#c2cdd8" stroke-width="0.7" opacity="0.4"/>
+  <!-- tightening force arrow -->
+  <line x1="679" y1="126" x2="679" y2="144" stroke="#dd4b41" stroke-width="2.8"/>
+  <polygon points="671,144 679,126 687,144" fill="#dd4b41"/>
+  <!-- contact indicators both sides -->
+  <circle cx="520" cy="222" r="5" fill="#7e8da0" opacity="0.5"/>
+  <circle cx="840" cy="222" r="5" fill="#7e8da0" opacity="0.5"/>
+</svg><div class="cap">Angular soft foot — corner gap, foot rocks when bolted · Parallel soft foot — uniform gap across entire foot</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">Procedure</div>
+    <h2>How to check for soft foot</h2>
+    <ul class="step-list">
+      <li><span class="num">1</span><span class="txt">Move indicators to the <strong>12 o'clock position</strong>, depress the indicators and zero both.</span></li>
+      <li><span class="num">2</span><span class="txt"><strong>Loosen one base bolt.</strong> If the indicator moves away from zero, slide shim stock under that foot — use the minimum thickness that will fit. Retighten the bolt and confirm the needle does not move.</span></li>
+      <li><span class="num">3</span><span class="txt"><strong>Repeat for each remaining foot.</strong> Check all four feet before beginning alignment.</span></li>
+    </ul>
+    <div class="callout"><strong>Important:</strong> Always correct soft foot <em>before</em> running a sag check or taking alignment readings. A machine that distorts under bolt load will never align repeatably.</div>
+    <div class="navfoot">
+      <a href="https://www.alinemfg.com/alignment-tolerances">← Alignment Tolerances</a>
+      <a href="https://www.alinemfg.com/sag-check">Sag Check →</a>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

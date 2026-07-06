@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sag Check | ALINE Manufacturing</title>
+<style>
+:root{--navy-deep:#0a1a29;--navy:#10243a;--navy-card:#152b44;--steel:#7e8da0;--steel-light:#c2cdd8;--paper:#edf0f2;--red:#bd322c;--red-bright:#dd4b41;--line:rgba(194,205,216,0.14);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--navy-deep);color:var(--paper);font-family:'IBM Plex Sans',Arial,sans-serif;-webkit-font-smoothing:antialiased;font-size:15px;}
+h1,h2,h3{font-family:'Oswald','Arial Narrow',sans-serif;text-transform:uppercase;letter-spacing:0.02em;font-weight:600;}
+.wrap{max-width:880px;margin:0 auto;padding:0 28px;}
+.hero{padding:56px 0 40px;border-bottom:1px solid var(--line);}
+.hero h1{font-size:34px;color:#fff;line-height:1.1;}
+.hero .lede{margin-top:14px;max-width:600px;font-size:16px;line-height:1.65;color:var(--steel-light);}
+.patent-tag{display:inline-block;margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--steel);border:1px solid var(--line);padding:5px 12px;}
+section{padding:48px 0;border-bottom:1px solid var(--line);}
+section:last-of-type{border-bottom:none;}
+.section-label{font-family:'IBM Plex Mono',monospace;color:var(--red-bright);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:12px;}
+section h2{font-size:22px;color:#fff;margin-bottom:16px;}
+.body-text{font-size:15px;line-height:1.75;color:var(--steel-light);max-width:640px;}
+.body-text+.body-text{margin-top:14px;}
+.body-text strong{color:#fff;}
+.diagram-card{background:var(--navy-card);border:1px solid var(--line);padding:18px;margin-top:24px;}
+.diagram-card svg{width:100%;height:auto;display:block;}
+.diagram-card .cap{margin-top:10px;font-size:12px;color:var(--steel);}
+.callout{margin-top:18px;background:var(--navy);border:1px solid var(--line);border-left:2px solid var(--red);padding:14px 18px;font-size:14px;line-height:1.6;color:var(--steel-light);max-width:580px;}
+.callout strong{color:#fff;}
+.step-list{list-style:none;margin-top:18px;max-width:620px;}
+.step-list li{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);}
+.step-list li:last-child{border-bottom:none;}
+.step-list .num{font-family:'IBM Plex Mono',monospace;color:var(--red-bright);font-size:13px;min-width:24px;margin-top:2px;}
+.step-list .txt{font-size:14.5px;line-height:1.7;color:var(--steel-light);}
+.step-list .txt strong{color:#fff;}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:20px;max-width:500px;}
+.stat{background:var(--navy-card);padding:18px 20px;}
+.stat .lbl{font-family:'IBM Plex Mono',monospace;color:var(--red-bright);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;}
+.stat .val{font-size:15px;color:#fff;line-height:1.5;}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px;max-width:700px;}
+.type-card{background:var(--navy-card);border:1px solid var(--line);padding:20px;}
+.type-card .t{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:15px;color:#fff;margin-bottom:10px;}
+.type-card .d{font-size:13.5px;line-height:1.65;color:var(--steel-light);}
+.formula{background:var(--navy-card);border:1px solid var(--line);padding:18px 22px;margin-top:20px;max-width:500px;}
+.formula .lbl{font-family:'IBM Plex Mono',monospace;color:var(--red-bright);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;}
+.formula .eq{font-family:'IBM Plex Mono',monospace;font-size:15px;color:#fff;line-height:1.8;}
+@media(max-width:640px){.hero h1{font-size:26px;}.stat-grid{grid-template-columns:1fr;}.twocol{grid-template-columns:1fr;}}
+
+  .crumb{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--steel);margin-bottom:18px;}
+  .crumb a{color:var(--steel);text-decoration:none;border-bottom:1px solid var(--line);}
+  .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--red);color:var(--red-bright);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;padding:5px 12px;margin-bottom:18px;}
+  .badge .dot{width:5px;height:5px;border-radius:50%;background:var(--red-bright);}
+  .pillnav{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 0;}
+  .pillnav a{display:inline-block;padding:9px 18px;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none;background:var(--navy-card);color:#fff;border:1px solid transparent;}
+  .pillnav a.active{background:transparent;border-color:var(--red);color:var(--red-bright);}
+  .navfoot{margin-top:56px;padding:24px 0 48px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+  .navfoot a{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--red-bright);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="crumb"><a href="https://www.alinemfg.com/introduction">Introduction</a> &nbsp;/&nbsp; Sag Check</div>
+    <div class="badge"><span class="dot"></span>ALINE MANUFACTURING USA — INSTRUCTIONS</div>
+    <h1>Sag Check</h1>
+    <p class="lede">A sag check determines how much an indicator bracket deflects under its own weight at a given distance — and lets you correct for it before taking any alignment readings.</p>
+        <nav class="pillnav">
+      <a href="https://www.alinemfg.com/introduction">Introduction</a>
+      <a href="https://www.alinemfg.com/alignment-tolerances">Alignment tolerances</a>
+      <a href="https://www.alinemfg.com/horizontal-move">Horizontal move</a>
+      <a href="https://www.alinemfg.com/vertical-move">Vertical move</a>
+      <a href="https://www.alinemfg.com/soft-foot-check">Soft foot check</a>
+      <a href="https://www.alinemfg.com/sag-check" class="active">Sag check</a>
+      <a href="https://www.alinemfg.com/thermal-movement">Thermal movement</a>
+      <a href="https://www.alinemfg.com/_files/ugd/c57b13_f2743713b7ee46d8b6f3de130de0c445.xls?dn=Ai%20Line%20Reverse%20Dial%20Alignment%20Excel%20Program.xls">Software download</a>
+    </nav>
+  </div>
+</header>
+
+
+<section>
+  <div class="wrap">
+    <div class="section-label">What It Is</div>
+    <h2>Why sag matters</h2>
+    <p class="body-text">A long indicator holder bends slightly under its own weight — even when the shafts are perfectly aligned. Without correcting for this sag, every vertical reading will carry a false negative offset. The sag check measures exactly how much that deflection is so you can compensate before you start.</p>
+    <div class="diagram-card" style="max-width:560px;">
+      <svg viewBox="0 0 500 150" xmlns="http://www.w3.org/2000/svg">
+        <defs><pattern id="sagd" width="17" height="17" patternUnits="userSpaceOnUse"><path d="M 17 0 L 0 0 0 17" fill="none" stroke="#c2cdd8" stroke-width="0.4" opacity="0.2"/></pattern></defs>
+        <rect width="500" height="150" fill="#0a1a29"/><rect width="500" height="150" fill="url(#sagd)"/>
+        <line x1="40" y1="55" x2="440" y2="55" stroke="#7e8da0" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <text x="452" y="59" fill="#7e8da0" font-family="IBM Plex Mono, monospace" font-size="10">IDEAL</text>
+        <path d="M 40 55 Q 240 106 440 70" fill="none" stroke="#dd4b41" stroke-width="2.2"/>
+        <text x="452" y="74" fill="#dd4b41" font-family="IBM Plex Mono, monospace" font-size="10">ACTUAL</text>
+        <line x1="240" y1="57" x2="240" y2="104" stroke="#c2cdd8" stroke-width="1" stroke-dasharray="2 2"/>
+        <text x="252" y="86" fill="#c2cdd8" font-family="IBM Plex Mono, monospace" font-size="12">sag</text>
+        <text x="48" y="132" fill="#7e8da0" font-family="IBM Plex Mono, monospace" font-size="11">SHAFT END</text>
+        <text x="360" y="132" fill="#7e8da0" font-family="IBM Plex Mono, monospace" font-size="11">BRACKET TIP</text>
+      </svg>
+      <div class="cap">The bracket bends under its own weight — sag is always negative and must be compensated on the vertical move.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">Procedure</div>
+    <h2>How to perform a sag check</h2>
+    <ul class="step-list">
+      <li><span class="num">1</span><span class="txt">Clamp the brackets on a <strong>sturdy piece of pipe</strong> at the same distance apart they will be when mounted on the actual equipment.</span></li>
+      <li><span class="num">2</span><span class="txt"><strong>Zero both indicators on top</strong>, then rotate to the bottom. The difference between the top and bottom reading is the sag.</span></li>
+      <li><span class="num">3</span><span class="txt"><strong>Record the sag value.</strong> Sag will always show as a negative number.</span></li>
+    </ul>
+    <div class="callout"><strong>Example:</strong> If sag is .002" — when zeroing your indicators on top for the vertical move, start the needle at <strong>+2</strong> instead of zero. This pre-compensates so the sag cancels out in the final reading.</div>
+    <div class="navfoot">
+      <a href="https://www.alinemfg.com/soft-foot-check">← Soft Foot Check</a>
+      <a href="https://www.alinemfg.com/vertical-move">Vertical Move →</a>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
