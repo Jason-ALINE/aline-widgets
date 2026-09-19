@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALINE Alignment Calculator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c1117;
+    --panel:#141b24;
+    --panel-alt:#1b2430;
+    --border:#2a3442;
+    --text:#e8edf3;
+    --text-dim:#8b97a6;
+    --red:#c8312a;
+    --red-dim:#7a2420;
+    --amber:#d99a3d;
+    --amber-dim:#9c7330;
+    --good:#3fa873;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  h1,h2,h3,.eyebrow{font-family:'Oswald',sans-serif; letter-spacing:.03em; text-transform:uppercase;}
+  .topbar{
+    position:sticky; top:0; z-index:50; background:var(--panel);
+    border-bottom:2px solid var(--red); padding:14px 20px;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand-mark{
+    width:34px; height:34px; border-radius:50%; border:3px solid var(--amber);
+    display:flex; align-items:center; justify-content:center; position:relative;
+  }
+  .brand-mark::after{
+    content:''; position:absolute; width:2px; height:13px; background:var(--red);
+    top:3px; left:50%; transform-origin:bottom center; transform:translateX(-50%) rotate(35deg);
+  }
+  .brand h1{font-size:18px; margin:0; color:var(--text); font-weight:600;}
+  .brand .sub{font-size:10.5px; color:var(--text-dim); letter-spacing:.08em; margin-top:2px;}
+  .job-controls{display:flex; gap:8px; align-items:center; flex-wrap:wrap;}
+  select,input,button,textarea{
+    font-family:'Inter',sans-serif; font-size:16px; background:var(--panel-alt);
+    color:var(--text); border:1px solid var(--border); border-radius:5px; padding:8px 10px;
+  }
+  input:focus,select:focus,textarea:focus{outline:none; border-color:var(--amber);}
+  button{cursor:pointer; font-weight:600; transition:filter .15s;}
+  button:hover{filter:brightness(1.15);}
+  button:active{filter:brightness(.9);}
+  .btn-red{background:var(--red); border-color:var(--red); color:#fff;}
+  .btn-amber{background:var(--amber); border-color:var(--amber); color:#1a1306;}
+  .btn-outline{background:transparent; border-color:var(--border); color:var(--text);}
+  .btn-outline:hover{border-color:var(--amber);}
+  .btn-sm{padding:6px 10px; font-size:12px;}
+
+  .wrap{max-width:1180px; margin:0 auto; padding:28px 20px 80px;}
+  .section{
+    background:var(--panel); border:1px solid var(--border); border-radius:10px;
+    padding:22px; margin-bottom:22px;
+  }
+  .section-head{display:flex; align-items:baseline; gap:10px; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:12px;}
+  .section-num{font-family:'IBM Plex Mono'; color:var(--amber); font-size:13px;}
+  .section h2{font-size:16px; margin:0; color:var(--text);}
+  .section .hint{color:var(--text-dim); font-size:12.5px; margin:-4px 0 16px;}
+
+  .grid{display:grid; gap:14px;}
+  .grid-2{grid-template-columns:repeat(2,1fr);}
+  .grid-3{grid-template-columns:repeat(3,1fr);}
+  .grid-4{grid-template-columns:repeat(4,1fr);}
+  @media(max-width:760px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}}
+
+  label{display:block; min-height:30px; line-height:1.3; font-size:11.5px; color:var(--text-dim); margin-bottom:5px; text-transform:uppercase; letter-spacing:.04em;}
+  .field input{width:100%;}
+  .field{margin-bottom:2px;}
+
+  .tabs{display:flex; gap:6px; margin-bottom:18px; flex-wrap:wrap;}
+  .tab{padding:9px 16px; border-radius:7px; border:1px solid var(--border); background:var(--panel-alt); color:var(--text-dim); cursor:pointer; font-size:13px; font-weight:600;}
+  .tab.active{background:var(--red); border-color:var(--red); color:#fff;}
+  .tab.disabled{opacity:.4; cursor:default;}
+  .panel-view{display:none;}
+  .panel-view.active{display:block;}
+
+  .gauge-row{display:flex; gap:24px; flex-wrap:wrap; justify-content:center; margin:6px 0 20px;}
+  .gauge-box{text-align:center;}
+  .gauge-box .gname{font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px;}
+
+  .side-split{display:grid; grid-template-columns:1fr 1fr; gap:28px; margin:6px 0 20px;}
+  .side-col{background:var(--panel-alt); border:1px solid var(--border); border-radius:8px; padding:14px 14px 16px;}
+  .side-label{text-align:center; font-size:12px; font-weight:600; color:var(--amber); text-transform:uppercase; letter-spacing:.06em; margin-bottom:10px;}
+  .side-col .grid-2{gap:10px;}
+  @media(max-width:760px){.side-split{grid-template-columns:1fr;}}
+
+  .results-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px;}
+  @media(max-width:760px){.results-grid{grid-template-columns:1fr;}}
+  .result-card{background:var(--panel-alt); border:1px solid var(--border); border-radius:8px; padding:16px;}
+  .result-card h3{font-size:12.5px; color:var(--amber); margin:0 0 10px; letter-spacing:.04em;}
+  .rline{display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border); font-size:13.5px;}
+  .rline:last-child{border-bottom:none;}
+  .rline .val{font-family:'IBM Plex Mono'; font-weight:600;}
+  .pos{color:var(--good);}
+  .neg{color:var(--red);}
+
+  .schematic{width:100%; max-width:640px; display:block; margin:0 auto 18px;}
+
+  .photo-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:12px; margin-top:14px;}
+  .photo-card{position:relative; border:1px solid var(--border); border-radius:6px; overflow:hidden; background:var(--panel-alt);}
+  .photo-card img{width:100%; height:110px; object-fit:cover; display:block;}
+  .photo-card .cap{padding:6px 8px; font-size:11px; color:var(--text-dim);}
+  .photo-card .del{position:absolute; top:4px; right:4px; background:rgba(12,17,23,.85); color:var(--red); border:none; border-radius:4px; width:22px; height:22px; font-size:13px; line-height:1; cursor:pointer;}
+  .dropzone{border:2px dashed var(--border); border-radius:8px; padding:24px; text-align:center; color:var(--text-dim); cursor:pointer; font-size:13px;}
+  .dropzone:hover{border-color:var(--amber); color:var(--amber);}
+
+  .status{font-size:12px; color:var(--text-dim); min-height:16px; margin-top:8px;}
+  .status.saved{color:var(--good);}
+
+  .report-area{background:#fff; color:#1a1a1a; border-radius:8px; padding:0; display:none;}
+  @media print{
+    body *{visibility:hidden;}
+    .report-area, .report-area *{visibility:visible;}
+    .report-area{display:block !important; position:absolute; top:0; left:0; width:100%; padding:30px; background:#fff;}
+  }
+
+  .phase-note{font-size:11.5px; color:var(--text-dim); background:var(--panel-alt); border:1px solid var(--border); border-radius:6px; padding:10px 12px; margin-top:10px;}
+  .footer-note{text-align:center; color:var(--text-dim); font-size:11.5px; margin-top:30px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark"></div>
+    <div>
+      <h1>ALINE Alignment Calculator</h1>
+      <div class="sub">Reverse Indicator &middot; Phase 1</div>
+    </div>
+  </div>
+  <div class="job-controls">
+    <select id="jobSelect"></select>
+    <button class="btn-outline btn-sm" id="newJobBtn">New Job</button>
+    <button class="btn-amber btn-sm" id="saveJobBtn">Save Job</button>
+    <button class="btn-outline btn-sm" id="deleteJobBtn">Delete</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- JOB INFO -->
+  <div class="section">
+    <div class="section-head"><span class="section-num">01</span><h2>Job Information</h2></div>
+    <div class="grid grid-4">
+      <div class="field"><label>Job Name</label><input id="jobName" placeholder="e.g. Pump P-204 Realign"></div>
+      <div class="field"><label>Date</label><input id="jobDate" type="date"></div>
+      <div class="field"><label>Technician</label><input id="jobTech" placeholder="Name"></div>
+      <div class="field"><label>Customer / Site</label><input id="jobCustomer" placeholder="Optional"></div>
+      <div class="field"><label>Fixed Machine</label><input id="machS" placeholder="e.g. Pump"></div>
+      <div class="field"><label>Movable Machine</label><input id="machM" placeholder="e.g. Motor"></div>
+      <div class="field"><label>Coupling Type</label><input id="couplingType" placeholder="Optional"></div>
+      <div class="field"><label>RPM</label><input id="rpm" placeholder="Optional"></div>
+    </div>
+    <div class="status" id="jobStatus"></div>
+  </div>
+
+  <!-- METHOD TABS -->
+  <div class="tabs">
+    <div class="tab active" data-tab="reverse">Reverse Indicator</div>
+    <div class="tab disabled" title="Coming in Phase 2">Face-Rim (Phase 2)</div>
+    <div class="tab disabled" title="Coming in Phase 3">Thermal Growth (Phase 3)</div>
+  </div>
+
+  <!-- GEOMETRY -->
+  <div class="section">
+    <div class="section-head"><span class="section-num">02</span><h2>Geometry</h2></div>
+    <p class="hint">Same three distances as the Vertical Move and Horizontal Move walkthroughs &mdash; already measured the job? Reuse those numbers here.</p>
+    <div class="step-diagram">
+      <svg class="schematic" viewBox="0 0 1400 640" xmlns="http://www.w3.org/2000/svg" style="max-width:700px;">
+        <defs><pattern id="gmEq" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M 28 0 L 0 0 0 28" fill="none" stroke="#22344a" stroke-width="1" opacity="0.55"/></pattern></defs>
+        <rect width="1400" height="640" fill="#0c1620"/>
+        <rect width="1400" height="640" fill="url(#gmEq)"/>
+
+        <!-- centerline -->
+        <line x1="80" y1="280" x2="1320" y2="280" stroke="#a8b8c8" stroke-width="2.5"/>
+
+        <!-- FIXED / MOVABLE labels above machines -->
+        <text x="270" y="120" fill="#a8b8c8" font-family="IBM Plex Mono, monospace" font-size="34" font-weight="700" text-anchor="middle" letter-spacing="1">FIXED</text>
+        <text x="1090" y="120" fill="#a8b8c8" font-family="IBM Plex Mono, monospace" font-size="34" font-weight="700" text-anchor="middle" letter-spacing="1">MOVABLE</text>
+
+        <!-- PUMP / FIXED -->
+        <circle cx="270" cy="280" r="85" fill="none" stroke="#a8b8c8" stroke-width="3"/>
+        <circle cx="270" cy="280" r="6" fill="none" stroke="#a8b8c8" stroke-width="2"/>
+        <polygon points="355,235 355,325 432,280" fill="none" stroke="#a8b8c8" stroke-width="3"/>
+        <line x1="440" y1="265" x2="440" y2="295" stroke="#a8b8c8" stroke-width="2.5"/>
+        <line x1="458" y1="260" x2="458" y2="300" stroke="#a8b8c8" stroke-width="2.5"/>
+        <line x1="476" y1="265" x2="476" y2="295" stroke="#a8b8c8" stroke-width="2.5"/>
+        <rect x="80" y="385" width="300" height="12" rx="4" fill="none" stroke="#a8b8c8" stroke-width="2.5"/>
+        <rect x="115" y="335" width="55" height="50" fill="#a8b8c8" opacity="0.85"/>
+        <rect x="160" y="325" width="48" height="48" fill="none" stroke="#a8b8c8" stroke-width="2.5"/>
+
+        <!-- MOTOR / MOVABLE -->
+        <rect x="918" y="190" width="345" height="170" rx="40" fill="none" stroke="#a8b8c8" stroke-width="3"/>
+        <rect x="1055" y="150" width="65" height="42" fill="none" stroke="#a8b8c8" stroke-width="2.5"/>
+        <line x1="965" y1="205" x2="965" y2="345" stroke="#a8b8c8" stroke-width="1.5"/>
+        <line x1="985" y1="205" x2="985" y2="345" stroke="#a8b8c8" stroke-width="1.5"/>
+        <line x1="1005" y1="205" x2="1005" y2="345" stroke="#a8b8c8" stroke-width="1.5"/>
+        <line x1="1175" y1="205" x2="1175" y2="345" stroke="#a8b8c8" stroke-width="1.5"/>
+        <line x1="1195" y1="205" x2="1195" y2="345" stroke="#a8b8c8" stroke-width="1.5"/>
+        <line x1="1215" y1="205" x2="1215" y2="345" stroke="#a8b8c8" stroke-width="1.5"/>
+        <rect x="905" y="385" width="375" height="12" rx="4" fill="none" stroke="#a8b8c8" stroke-width="2.5"/>
+        <rect x="955" y="345" width="60" height="45" fill="#a8b8c8" opacity="0.85"/>
+        <rect x="1195" y="345" width="60" height="45" fill="#a8b8c8" opacity="0.85"/>
+
+        <!-- F / M indicator markers on centerline -->
+        <circle cx="520" cy="280" r="33" fill="#0c1620" stroke="#4f8fdb" stroke-width="3"/>
+        <text x="520" y="291" fill="#4f8fdb" font-family="IBM Plex Mono, monospace" font-size="30" font-weight="700" text-anchor="middle">F</text>
+        <circle cx="800" cy="280" r="33" fill="#0c1620" stroke="#dd4b41" stroke-width="3"/>
+        <text x="800" y="291" fill="#dd4b41" font-family="IBM Plex Mono, monospace" font-size="30" font-weight="700" text-anchor="middle">M</text>
+
+        <!-- A / B / C measurement brackets -->
+        <line x1="520" y1="385" x2="520" y2="460" stroke="#dde3ea" stroke-width="1.5" stroke-dasharray="6 6"/>
+        <line x1="800" y1="385" x2="800" y2="460" stroke="#dde3ea" stroke-width="1.5" stroke-dasharray="6 6"/>
+        <line x1="955" y1="385" x2="955" y2="460" stroke="#dde3ea" stroke-width="1.5" stroke-dasharray="6 6"/>
+        <line x1="1240" y1="385" x2="1240" y2="460" stroke="#dde3ea" stroke-width="1.5" stroke-dasharray="6 6"/>
+        <line x1="520" y1="460" x2="1240" y2="460" stroke="#dde3ea" stroke-width="1.5"/>
+        <text x="660" y="440" fill="#dd4b41" font-family="IBM Plex Mono, monospace" font-size="30" font-weight="700" text-anchor="middle">A</text>
+        <text x="878" y="440" fill="#dd4b41" font-family="IBM Plex Mono, monospace" font-size="30" font-weight="700" text-anchor="middle">B</text>
+        <text x="1098" y="440" fill="#dd4b41" font-family="IBM Plex Mono, monospace" font-size="30" font-weight="700" text-anchor="middle">C</text>
+      </svg>
+      <div class="cap" style="text-align:center; color:var(--text-dim); font-size:12px; margin-top:6px;">A = between indicators &middot; B = movable indicator to front foot &middot; C = front foot to back foot.</div>
+    </div>
+    <div class="grid grid-4" style="margin-top:18px;">
+      <div class="field"><label>(A) Between Indicators (in)</label><input id="gA" type="number" step="0.0625" placeholder="e.g. 6.5"></div>
+      <div class="field"><label>(B) Movable Indicator to Front Foot (in)</label><input id="gB" type="number" step="0.0625" placeholder="e.g. 9"></div>
+      <div class="field"><label>(C) Front Foot to Back Foot (in)</label><input id="gC" type="number" step="0.0625" placeholder="e.g. 19"></div>
+      <div class="field"><label>Fixed Indicator to Coupling Center (in)</label><input id="gXc" type="number" step="0.0625" placeholder="auto: midpoint of A"></div>
+    </div>
+  </div>
+
+
+  <!-- READINGS -->
+  <div class="section">
+    <div class="section-head"><span class="section-num">03</span><h2>Indicator Readings</h2></div>
+    <p class="hint">Enter each reading exactly as it appears on the indicator dial, in .001" increments &mdash; including the minus sign if it's negative. Each mini dial below sweeps to show where that exact reading would land on the real indicator face.</p>
+
+    <h3 style="font-size:13px; color:var(--text-dim); letter-spacing:.04em;">HORIZONTAL PLANE</h3>
+    <div class="side-split">
+      <div class="side-col">
+        <div class="side-label">Fixed Side</div>
+        <div class="grid grid-2">
+          <div class="gauge-box"><div class="gname">Left</div><svg id="dialHLeftS" width="110" height="140"></svg></div>
+          <div class="gauge-box"><div class="gname">Right</div><svg id="dialHRightS" width="110" height="140"></svg></div>
+        </div>
+        <div class="grid grid-2" style="margin-top:10px;">
+          <div class="field"><label>Fixed-side Left (.001")</label><input id="hLeftS" type="number" step="1" value="0" class="readingInput" data-gauge="H"></div>
+          <div class="field"><label>Fixed-side Right (.001")</label><input id="hRightS" type="number" step="1" value="0" class="readingInput" data-gauge="H"></div>
+        </div>
+      </div>
+      <div class="side-col">
+        <div class="side-label">Movable Side</div>
+        <div class="grid grid-2">
+          <div class="gauge-box"><div class="gname">Left</div><svg id="dialHLeftM" width="110" height="140"></svg></div>
+          <div class="gauge-box"><div class="gname">Right</div><svg id="dialHRightM" width="110" height="140"></svg></div>
+        </div>
+        <div class="grid grid-2" style="margin-top:10px;">
+          <div class="field"><label>Movable-side Left (.001")</label><input id="hLeftM" type="number" step="1" value="0" class="readingInput" data-gauge="H"></div>
+          <div class="field"><label>Movable-side Right (.001")</label><input id="hRightM" type="number" step="1" value="0" class="readingInput" data-gauge="H"></div>
+        </div>
+      </div>
+    </div>
+    <p class="phase-note" style="margin-top:14px;">No sag field here on purpose &mdash; sag is caused by gravity pulling on the bracket, which only biases the Top/Bottom sweep. A Left/Right sweep isn't affected, so there's nothing to compensate for in this plane.</p>
+
+    <h3 style="font-size:13px; color:var(--text-dim); letter-spacing:.04em; margin-top:22px;">VERTICAL PLANE</h3>
+    <div class="side-split">
+      <div class="side-col">
+        <div class="side-label">Fixed Side</div>
+        <div class="grid grid-2">
+          <div class="gauge-box"><div class="gname">Top</div><svg id="dialVTopS" width="110" height="140"></svg></div>
+          <div class="gauge-box"><div class="gname">Bottom</div><svg id="dialVBotS" width="110" height="140"></svg></div>
+        </div>
+        <div class="grid grid-2" style="margin-top:10px;">
+          <div class="field"><label>Fixed-side Top (.001")</label><input id="vTopS" type="number" step="1" value="0" class="readingInput" data-gauge="V"></div>
+          <div class="field"><label>Fixed-side Bottom (.001")</label><input id="vBotS" type="number" step="1" value="0" class="readingInput" data-gauge="V"></div>
+        </div>
+      </div>
+      <div class="side-col">
+        <div class="side-label">Movable Side</div>
+        <div class="grid grid-2">
+          <div class="gauge-box"><div class="gname">Top</div><svg id="dialVTopM" width="110" height="140"></svg></div>
+          <div class="gauge-box"><div class="gname">Bottom</div><svg id="dialVBotM" width="110" height="140"></svg></div>
+        </div>
+        <div class="grid grid-2" style="margin-top:10px;">
+          <div class="field"><label>Movable-side Top (.001")</label><input id="vTopM" type="number" step="1" value="0" class="readingInput" data-gauge="V"></div>
+          <div class="field"><label>Movable-side Bottom (.001")</label><input id="vBotM" type="number" step="1" value="0" class="readingInput" data-gauge="V"></div>
+        </div>
+      </div>
+    </div>
+    <div class="field" style="max-width:320px; margin-top:14px;">
+      <label>Sag (.001") &mdash; applies to both indicators</label>
+      <input id="vSag" type="number" step="1" value="0">
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="section">
+    <div class="section-head"><span class="section-num">04</span><h2>Results</h2></div>
+    <div class="results-grid">
+      <div class="result-card">
+        <h3>HORIZONTAL &mdash; SIDE MOVE</h3>
+        <div class="rline"><span>Offset at coupling</span><span class="val" id="rHCoupling">&mdash;</span></div>
+        <div class="rline"><span>Angularity</span><span class="val" id="rHAngle">&mdash;</span></div>
+        <div class="rline"><span>Front foot &mdash; move</span><span class="val" id="rHFront">&mdash;</span></div>
+        <div class="rline"><span>Back foot &mdash; move</span><span class="val" id="rHBack">&mdash;</span></div>
+      </div>
+      <div class="result-card">
+        <h3>VERTICAL &mdash; SHIM CORRECTION</h3>
+        <div class="rline"><span>Offset at coupling</span><span class="val" id="rVCoupling">&mdash;</span></div>
+        <div class="rline"><span>Angularity</span><span class="val" id="rVAngle">&mdash;</span></div>
+        <div class="rline"><span>Front foot &mdash; shim</span><span class="val" id="rVFront">&mdash;</span></div>
+        <div class="rline"><span>Back foot &mdash; shim</span><span class="val" id="rVBack">&mdash;</span></div>
+      </div>
+    </div>
+    <div class="phase-note">Positive shim = add shim under that foot (raise Movable machine). Negative = remove shim (lower it). Positive horizontal move = move the Movable machine to the right when facing from Fixed to Movable; negative = move left. Verify this calculator against a known-good job or textbook example before relying on it for live machinery moves.</div>
+  </div>
+
+  <!-- PHOTOS -->
+  <div class="section">
+    <div class="section-head"><span class="section-num">05</span><h2>Photos</h2></div>
+    <div class="dropzone" id="dropzone">Click to add photos, or drag &amp; drop &mdash; nameplates, setup, bracket rig, before/after shots</div>
+    <input type="file" id="photoInput" accept="image/*" multiple style="display:none;">
+    <div class="photo-grid" id="photoGrid"></div>
+  </div>
+
+  <!-- REPORT -->
+  <div class="section">
+    <div class="section-head"><span class="section-num">06</span><h2>Report</h2></div>
+    <p class="hint">Generate a printable report (use your browser's "Save as PDF" in the print dialog), or open an email draft to send the summary.</p>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button class="btn-red" id="genReportBtn">Generate &amp; Print Report</button>
+      <button class="btn-outline" id="emailReportBtn">Email Report Summary</button>
+    </div>
+  </div>
+
+  <div class="footer-note">ALINE Manufacturing &mdash; Internal Tool &mdash; Phase 1: Reverse Indicator Method</div>
+</div>
+
+<div class="report-area" id="reportArea"></div>
+
+<script>
+// ---------- STORAGE ----------
+const STORE_KEY = 'aline_alignment_jobs_v1';
+function loadJobs(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }catch(e){ return {}; } }
+function saveJobs(jobs){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(jobs)); return true; }catch(e){ return false; } }
+
+let jobs = loadJobs();
+let currentJobId = null;
+let photos = []; // {name, dataUrl}
+
+const fields = ['jobName','jobDate','jobTech','jobCustomer','machS','machM','couplingType','rpm',
+  'gA','gB','gC','gXc',
+  'vTopS','vBotS','vTopM','vBotM','vSag',
+  'hLeftS','hRightS','hLeftM','hRightM'];
+
+function refreshJobSelect(){
+  const sel = document.getElementById('jobSelect');
+  sel.innerHTML = '<option value="">-- Select saved job --</option>';
+  Object.keys(jobs).forEach(id=>{
+    const opt = document.createElement('option');
+    opt.value = id; opt.textContent = jobs[id].jobName || '(untitled)';
+    if(id===currentJobId) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+function collectState(){
+  const state = {};
+  fields.forEach(f=> state[f] = document.getElementById(f).value);
+  state.photos = photos;
+  state.savedAt = new Date().toISOString();
+  return state;
+}
+
+function applyState(state){
+  fields.forEach(f=>{ if(document.getElementById(f)) document.getElementById(f).value = state[f] || ''; });
+  photos = state.photos || [];
+  renderPhotos();
+  compute();
+}
+
+document.getElementById('newJobBtn').onclick = ()=>{
+  currentJobId = null;
+  fields.forEach(f=> document.getElementById(f).value = (f.startsWith('v')||f.startsWith('h'))?0:'');
+  document.getElementById('jobDate').valueAsDate = new Date();
+  photos = [];
+  renderPhotos();
+  document.getElementById('jobStatus').textContent = 'New job started (not yet saved).';
+  document.getElementById('jobStatus').className='status';
+  refreshJobSelect();
+  compute();
+};
+
+document.getElementById('saveJobBtn').onclick = ()=>{
+  const state = collectState();
+  if(!state.jobName){ document.getElementById('jobStatus').textContent='Add a job name before saving.'; document.getElementById('jobStatus').className='status'; return; }
+  const id = currentJobId || ('job_'+Date.now());
+  jobs[id] = state;
+  currentJobId = id;
+  const ok = saveJobs(jobs);
+  refreshJobSelect();
+  document.getElementById('jobStatus').textContent = ok? 'Saved "'+state.jobName+'" to this browser.' : 'Could not save — storage may be full or blocked.';
+  document.getElementById('jobStatus').className = ok? 'status saved' : 'status';
+};
+
+document.getElementById('jobSelect').onchange = (e)=>{
+  const id = e.target.value;
+  if(!id){ return; }
+  currentJobId = id;
+  applyState(jobs[id]);
+  document.getElementById('jobStatus').textContent = 'Loaded "'+(jobs[id].jobName||'')+'".';
+  document.getElementById('jobStatus').className='status saved';
+};
+
+document.getElementById('deleteJobBtn').onclick = ()=>{
+  if(!currentJobId){ document.getElementById('jobStatus').textContent='No saved job selected.'; return; }
+  if(!confirm('Delete this saved job? This cannot be undone.')) return;
+  delete jobs[currentJobId];
+  saveJobs(jobs);
+  currentJobId = null;
+  refreshJobSelect();
+  document.getElementById('jobStatus').textContent = 'Job deleted.';
+  document.getElementById('jobStatus').className='status';
+};
+
+// ---------- DIALS ----------
+function drawDial(svgId, value){
+  const svg = document.getElementById(svgId);
+  const w=110, h=140, cx=55, cy=68, r=42;
+  svg.setAttribute('width', w);
+  svg.setAttribute('height', h);
+  svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+
+  const v = Number(value)||0;
+  let scale = v!==0 ? Math.max(10, Math.ceil(Math.abs(v)/5)*5) : 10;
+  let angle = (v/scale)*180;
+  if(angle>180) angle=180;
+  if(angle<-180) angle=-180;
+  const rad = (angle-90) * Math.PI/180;
+  const nx = cx + (r-10)*Math.cos(rad);
+  const ny = cy + (r-10)*Math.sin(rad);
+
+  function tickPos(deg, len){
+    const rd = (deg-90)*Math.PI/180;
+    return [cx+(r-len)*Math.cos(rd), cy+(r-len)*Math.sin(rd), cx+r*Math.cos(rd), cy+r*Math.sin(rd)];
+  }
+  function labelPos(deg, dist){
+    const rd = (deg-90)*Math.PI/180;
+    return [cx+dist*Math.cos(rd), cy+dist*Math.sin(rd)];
+  }
+
+  const minorTicks = [-180,-135,-90,-45,0,45,90,135,180];
+  let ticks = minorTicks.map(d=>{
+    const [x1,y1,x2,y2] = tickPos(d,7);
+    return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="#8b97a6" stroke-width="1.5"/>`;
+  }).join('');
+
+  const sideLabels = [[0,'0'],[90,'+'+(scale/2)],[-90,'-'+(scale/2)]];
+  let labels = sideLabels.map(([d,txt])=>{
+    const [lx,ly] = labelPos(d, r+13);
+    return `<text x="${lx.toFixed(1)}" y="${(ly+4).toFixed(1)}" text-anchor="middle" fill="#8b97a6" font-family="IBM Plex Mono, monospace" font-size="9">${txt}</text>`;
+  }).join('');
+  const [bx,by] = labelPos(180, r+10);
+  labels += `<text x="${bx.toFixed(1)}" y="${(by+3).toFixed(1)}" text-anchor="middle" fill="#8b97a6" font-family="IBM Plex Mono, monospace" font-size="8">&plusmn;${scale}</text>`;
+
+  const sign = v>=0 ? '+' : '';
+
+  svg.innerHTML = `
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="#1b2430" stroke="#2a3442" stroke-width="2"/>
+    ${ticks}
+    ${labels}
+    <line x1="${cx}" y1="${cy}" x2="${nx.toFixed(1)}" y2="${ny.toFixed(1)}" stroke="#c8312a" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="${cx}" cy="${cy}" r="3.5" fill="#d99a3d"/>
+    <text x="${cx}" y="${cy+r+30}" text-anchor="middle" fill="#d99a3d" font-family="IBM Plex Mono, monospace" font-size="15" font-weight="700">${sign}${v}</text>
+  `;
+}
+
+// ---------- CALCULATION ----------
+function correctedOffset(bot, sag){
+  let cBot = (Number(bot)||0) - (Number(sag)||0);
+  return cBot/2;
+}
+function rawOffset(bot){
+  return (Number(bot)||0)/2;
+}
+function fmt(n){ return (n>=0?'+':'') + n.toFixed(2); }
+function fmtThou(n){
+  // n is in thousandths of an inch; display as decimal inches, e.g. +.0045"
+  const sign = n>=0? '+' : '-';
+  let abs = (Math.abs(n)/1000).toFixed(4); // "0.0045"
+  abs = abs.replace(/^0/, ''); // ".0045"
+  return sign + abs + '"';
+}
+
+function computeAxis(o1, o2, xS, xM, xC, xFront, xBack){
+  // Bracket rig is crossed: the Fixed-side indicator is clamped to the Movable shaft
+  // and reads back against the Fixed shaft, so its raw half-reading is "Fixed rel Movable"
+  // and must be sign-flipped to express "Movable rel Fixed" at xS.
+  // The Movable-side indicator is clamped to the Fixed shaft and reads the Movable shaft
+  // directly, so its raw half-reading is already "Movable rel Fixed" at xM — no flip.
+  const offSet1 = -o1, offSet2 = o2;
+  const slope = (xM===xS) ? 0 : (offSet2 - offSet1)/(xM - xS);
+  function offsetAt(x){ return offSet1 + slope*(x-xS); }
+  return {
+    couplingOffset: offsetAt(xC),
+    angleThouPerInch: slope*1000,
+    frontCorrection: -offsetAt(xFront),
+    backCorrection: -offsetAt(xBack),
+    slope
+  };
+}
+
+function compute(){
+  const xS = 0;
+  const A = Number(document.getElementById('gA').value)||0;   // between indicators
+  const B = Number(document.getElementById('gB').value)||0;   // movable indicator to front foot
+  const C = Number(document.getElementById('gC').value)||0;   // front foot to back foot
+  const xM = A;
+  const gXcRaw = document.getElementById('gXc').value;
+  const xC = gXcRaw!==''? Number(gXcRaw) : (xS+xM)/2;
+  const xFront = xM + B;
+  const xBack = xFront + C;
+
+  // vertical
+  const vTopS=document.getElementById('vTopS').value, vBotS=document.getElementById('vBotS').value;
+  const vTopM=document.getElementById('vTopM').value, vBotM=document.getElementById('vBotM').value;
+  const vSag=document.getElementById('vSag').value;
+  const vO1 = correctedOffset(vBotS, vSag); // raw half-reading, Fixed-side indicator (Fixed rel Movable at xS — flipped inside computeAxis)
+  const vO2 = correctedOffset(vBotM, vSag); // raw half-reading, Movable-side indicator (Movable rel Fixed at xM — used as-is)
+  const vRes = computeAxis(vO1, vO2, xS, xM, xC, xFront, xBack);
+
+  document.getElementById('rVCoupling').textContent = fmtThou(vRes.couplingOffset);
+  document.getElementById('rVAngle').textContent = fmt(vRes.angleThouPerInch) + ' .001"/in';
+  const rvf = document.getElementById('rVFront'); rvf.textContent = fmtThou(vRes.frontCorrection); rvf.className='val '+(vRes.frontCorrection>=0?'pos':'neg');
+  const rvb = document.getElementById('rVBack'); rvb.textContent = fmtThou(vRes.backCorrection); rvb.className='val '+(vRes.backCorrection>=0?'pos':'neg');
+
+  // horizontal — no sag correction (gravity sag doesn't bias a left/right sweep)
+  const hLeftS=document.getElementById('hLeftS').value, hRightS=document.getElementById('hRightS').value;
+  const hLeftM=document.getElementById('hLeftM').value, hRightM=document.getElementById('hRightM').value;
+  const hO1 = rawOffset(hRightS);
+  const hO2 = rawOffset(hRightM);
+  const hRes = computeAxis(hO1, hO2, xS, xM, xC, xFront, xBack);
+
+  document.getElementById('rHCoupling').textContent = fmtThou(hRes.couplingOffset);
+  document.getElementById('rHAngle').textContent = fmt(hRes.angleThouPerInch) + ' .001"/in';
+  const rhf = document.getElementById('rHFront'); rhf.textContent = fmtThou(hRes.frontCorrection); rhf.className='val '+(hRes.frontCorrection>=0?'pos':'neg');
+  const rhb = document.getElementById('rHBack'); rhb.textContent = fmtThou(hRes.backCorrection); rhb.className='val '+(hRes.backCorrection>=0?'pos':'neg');
+
+  drawDial('dialVTopS', vTopS);
+  drawDial('dialVBotS', vBotS);
+  drawDial('dialVTopM', vTopM);
+  drawDial('dialVBotM', vBotM);
+  drawDial('dialHLeftS', hLeftS);
+  drawDial('dialHRightS', hRightS);
+  drawDial('dialHLeftM', hLeftM);
+  drawDial('dialHRightM', hRightM);
+
+  return {vRes, hRes, xS, xM, xC, xFront, xBack};
+}
+
+document.querySelectorAll('input').forEach(inp=> inp.addEventListener('input', compute));
+
+// ---------- PHOTOS ----------
+const dropzone = document.getElementById('dropzone');
+const photoInput = document.getElementById('photoInput');
+dropzone.onclick = ()=> photoInput.click();
+dropzone.ondragover = (e)=>{ e.preventDefault(); dropzone.style.borderColor='#d99a3d'; };
+dropzone.ondrop = (e)=>{ e.preventDefault(); handleFiles(e.dataTransfer.files); };
+
+photoInput.onchange = (e)=> handleFiles(e.target.files);
+
+function handleFiles(files){
+  Array.from(files).forEach(file=>{
+    if(!file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = (ev)=>{
+      const img = new Image();
+      img.onload = ()=>{
+        // compress/resize to keep localStorage usage reasonable
+        const maxW = 900;
+        const scale = Math.min(1, maxW/img.width);
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width*scale; canvas.height = img.height*scale;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img,0,0,canvas.width,canvas.height);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.75);
+        photos.push({name:file.name, dataUrl});
+        renderPhotos();
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderPhotos(){
+  const grid = document.getElementById('photoGrid');
+  grid.innerHTML = '';
+  photos.forEach((p, idx)=>{
+    const card = document.createElement('div');
+    card.className='photo-card';
+    card.innerHTML = `<img src="${p.dataUrl}"><div class="cap">${p.name}</div><button class="del" data-idx="${idx}">&times;</button>`;
+    grid.appendChild(card);
+  });
+  grid.querySelectorAll('.del').forEach(btn=>{
+    btn.onclick = ()=>{ photos.splice(Number(btn.dataset.idx),1); renderPhotos(); };
+  });
+}
+
+// ---------- REPORT ----------
+function buildReportHtml(){
+  const r = compute();
+  const get = id => document.getElementById(id).value || '—';
+  const photosHtml = photos.map(p=>`<div style="display:inline-block; margin:6px;"><img src="${p.dataUrl}" style="width:200px; border:1px solid #ccc;"><div style="font-size:11px; color:#555;">${p.name}</div></div>`).join('');
+  return `
+    <div style="font-family:Arial,sans-serif; color:#1a1a1a;">
+      <div style="border-bottom:3px solid #c8312a; padding-bottom:10px; margin-bottom:16px;">
+        <h1 style="margin:0; font-size:22px;">ALINE Manufacturing &mdash; Shaft Alignment Report</h1>
+        <div style="font-size:13px; color:#555;">Reverse Indicator Method</div>
+      </div>
+      <table style="width:100%; font-size:13px; margin-bottom:16px;">
+        <tr><td><b>Job:</b> ${get('jobName')}</td><td><b>Date:</b> ${get('jobDate')}</td></tr>
+        <tr><td><b>Technician:</b> ${get('jobTech')}</td><td><b>Customer/Site:</b> ${get('jobCustomer')}</td></tr>
+        <tr><td><b>Fixed Machine:</b> ${get('machS')}</td><td><b>Movable Machine:</b> ${get('machM')}</td></tr>
+        <tr><td><b>Coupling:</b> ${get('couplingType')}</td><td><b>RPM:</b> ${get('rpm')}</td></tr>
+      </table>
+      <h3 style="border-bottom:1px solid #ccc; padding-bottom:4px;">Results</h3>
+      <table style="width:100%; font-size:13px; border-collapse:collapse;" border="1" cellpadding="6">
+        <tr style="background:#f0f0f0;"><th>Plane</th><th>Coupling Offset</th><th>Angularity</th><th>Front Foot</th><th>Back Foot</th></tr>
+        <tr><td>Vertical</td><td>${fmtThou(r.vRes.couplingOffset)}</td><td>${fmt(r.vRes.angleThouPerInch)} .001"/in</td><td>${fmtThou(r.vRes.frontCorrection)}</td><td>${fmtThou(r.vRes.backCorrection)}</td></tr>
+        <tr><td>Horizontal</td><td>${fmtThou(r.hRes.couplingOffset)}</td><td>${fmt(r.hRes.angleThouPerInch)} .001"/in</td><td>${fmtThou(r.hRes.frontCorrection)}</td><td>${fmtThou(r.hRes.backCorrection)}</td></tr>
+      </table>
+      <p style="font-size:11px; color:#777; margin-top:8px;">Positive vertical = add shim (raise Movable machine). Positive horizontal = move the Movable machine to the right facing Fixed&rarr;Movable.</p>
+      <h3 style="border-bottom:1px solid #ccc; padding-bottom:4px; margin-top:20px;">Photos</h3>
+      <div>${photosHtml || '<i>No photos attached.</i>'}</div>
+      <p style="font-size:10.5px; color:#999; margin-top:24px;">Generated by ALINE Alignment Calculator. Verify results before applying corrections to live machinery.</p>
+    </div>
+  `;
+}
+
+document.getElementById('genReportBtn').onclick = ()=>{
+  const area = document.getElementById('reportArea');
+  area.innerHTML = buildReportHtml();
+  area.style.display = 'block';
+  setTimeout(()=>{ window.print(); }, 100);
+};
+
+document.getElementById('emailReportBtn').onclick = ()=>{
+  const r = compute();
+  const get = id => document.getElementById(id).value || '—';
+  const subject = encodeURIComponent('Alignment Report: ' + (get('jobName')!=='—'?get('jobName'):'Untitled Job'));
+  const body = encodeURIComponent(
+`ALINE Manufacturing — Shaft Alignment Report
+Job: ${get('jobName')}
+Date: ${get('jobDate')}
+Technician: ${get('jobTech')}
+Fixed Machine: ${get('machS')}
+Movable Machine: ${get('machM')}
+
+VERTICAL
+Coupling offset: ${fmtThou(r.vRes.couplingOffset)}
+Angularity: ${fmt(r.vRes.angleThouPerInch)} .001"/in
+Front foot shim: ${fmtThou(r.vRes.frontCorrection)}
+Back foot shim: ${fmtThou(r.vRes.backCorrection)}
+
+HORIZONTAL
+Coupling offset: ${fmtThou(r.hRes.couplingOffset)}
+Angularity: ${fmt(r.hRes.angleThouPerInch)} .001"/in
+Front foot move: ${fmtThou(r.hRes.frontCorrection)}
+Back foot move: ${fmtThou(r.hRes.backCorrection)}
+
+(Generate & print the full report first if you want to attach photos as a PDF.)
+`);
+  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+};
+
+// init
+document.getElementById('jobDate').valueAsDate = new Date();
+refreshJobSelect();
+compute();
+</script>
+</body>
+</html>
