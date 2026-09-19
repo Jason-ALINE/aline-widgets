@@ -524,5 +524,18 @@
     </div>
 
   </div><!-- /page -->
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+  document.querySelectorAll("a[href]").forEach(function(a){
+    a.addEventListener("click",function(e){
+      var href=this.getAttribute("href");
+      if(href && href.indexOf("#")<0){
+        e.preventDefault();
+        window.top.location.href=href;
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>
