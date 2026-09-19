@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instructions | ALine Manufacturing USA</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --aline-navy:       #0d1b2a;
+      --aline-navy-mid:   #162032;
+      --aline-navy-light: #1e2e42;
+      --aline-red:        #c0392b;
+      --aline-red-light:  #e8453a;
+      --aline-red-bg:     rgba(192,57,43,0.12);
+      --aline-white:      #f5f6f7;
+      --aline-muted:      #8fa1b3;
+      --aline-border:     rgba(255,255,255,0.09);
+      --aline-border-mid: rgba(255,255,255,0.15);
+    }
+
+    html, body {
+      background: var(--aline-navy);
+      color: var(--aline-white);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 3rem 2rem 4rem;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      border-bottom: 0.5px solid var(--aline-border);
+      padding-bottom: 2rem;
+      margin-bottom: 2.5rem;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: var(--aline-red);
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .hero-title {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--aline-white);
+      margin-bottom: 0.8rem;
+      line-height: 1.2;
+    }
+    .hero-sub {
+      font-size: 15px;
+      color: var(--aline-muted);
+      line-height: 1.75;
+      max-width: 620px;
+    }
+    .patent {
+      display: inline-block;
+      font-size: 11px;
+      color: var(--aline-muted);
+      border: 0.5px solid var(--aline-border-mid);
+      border-radius: 4px;
+      padding: 3px 10px;
+      margin-top: 1rem;
+    }
+
+    /* ── Quick-nav pills ── */
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 2.5rem;
+    }
+    .nav-pill {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--aline-white);
+      background: var(--aline-navy-light);
+      border: 0.5px solid var(--aline-border-mid);
+      border-radius: 999px;
+      padding: 6px 16px;
+      text-decoration: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .nav-pill:hover {
+      border-color: var(--aline-red);
+      background: rgba(192,57,43,0.12);
+      color: var(--aline-white);
+    }
+
+    /* ── Section label ── */
+    .section-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: var(--aline-muted);
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── Steps ── */
+    .steps { display: flex; flex-direction: column; }
+
+    .step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 0 1.25rem;
+      padding: 1.5rem 0;
+      border-bottom: 0.5px solid var(--aline-border);
+    }
+    .step:last-child { border-bottom: none; }
+
+    .step-num-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .step-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--aline-navy-light);
+      border: 0.5px solid var(--aline-border-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--aline-muted);
+      flex-shrink: 0;
+    }
+    .step-line {
+      width: 1px;
+      flex: 1;
+      background: var(--aline-border);
+      margin-top: 8px;
+    }
+    .step:last-child .step-line { display: none; }
+
+    .step-body { padding-bottom: 0.25rem; }
+
+    .step-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--aline-white);
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+    .step-desc {
+      font-size: 13px;
+      color: var(--aline-muted);
+      line-height: 1.7;
+    }
+    .step-desc ul {
+      padding-left: 1.1rem;
+      margin-top: 0.4rem;
+    }
+    .step-desc li { margin-bottom: 0.3rem; }
+
+    .step-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--aline-red-light);
+      text-decoration: none;
+      margin-top: 0.7rem;
+      letter-spacing: 0.02em;
+      transition: color 0.15s;
+    }
+    .step-link:hover { color: var(--aline-white); }
+    .step-link svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+    .step-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 9px;
+      border-radius: 4px;
+      margin-left: 10px;
+      letter-spacing: 0.05em;
+      vertical-align: middle;
+      background: var(--aline-red-bg);
+      color: var(--aline-red-light);
+      border: 0.5px solid rgba(192,57,43,0.35);
+      text-transform: uppercase;
+    }
+
+    /* ── Graph image ── */
+    .graph-wrap {
+      margin-top: 1rem;
+      border: 0.5px solid var(--aline-border-mid);
+      border-radius: 6px;
+      overflow: hidden;
+      max-width: 440px;
+      background: var(--aline-navy-light);
+    }
+    .graph-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+      opacity: 0.92;
+    }
+    .img-caption {
+      font-size: 11px;
+      color: var(--aline-muted);
+      padding: 6px 12px;
+      border-top: 0.5px solid var(--aline-border);
+    }
+
+    /* ── Closing ── */
+    .closing {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 0.5px solid var(--aline-border);
+    }
+    .closing-text {
+      font-size: 14px;
+      color: var(--aline-muted);
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+
+    /* ── Contact card ── */
+    .contact-card {
+      background: var(--aline-navy-light);
+      border: 0.5px solid var(--aline-border-mid);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+    }
+    .contact-label {
+      font-size: 10px;
+      color: var(--aline-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    .contact-val {
+      font-size: 13px;
+      color: var(--aline-white);
+      line-height: 1.6;
+    }
+    .contact-val a {
+      color: var(--aline-red-light);
+      text-decoration: none;
+    }
+    .contact-val a:hover { text-decoration: underline; }
+
+    .footer-note {
+      font-size: 11px;
+      color: var(--aline-muted);
+      margin-top: 1.5rem;
+      opacity: 0.65;
+    }
+    .footer-note a {
+      color: var(--aline-muted);
+      text-decoration: none;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .page { padding: 2rem 1.25rem 3rem; }
+      .hero-title { font-size: 26px; }
+      .contact-card { grid-template-columns: 1fr; }
+      .step { grid-template-columns: 44px 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- Hero -->
+    <div class="hero">
+      <p class="hero-eyebrow">ALine Manufacturing USA</p>
+      <h1 class="hero-title">Alignment instructions</h1>
+      <p class="hero-sub">A step-by-step guide to reverse dial indicator alignment. Follow these steps in order for a successful alignment job. Print any topic using your browser's print function.</p>
+      <span class="patent">Patent # 4,516,328</span>
+    </div>
+
+    <!-- Quick-nav pills -->
+    <nav aria-label="Quick navigation">
+      <div class="nav-links">
+        <a class="nav-pill" href="https://www.alinemfg.com/introduction">Introduction</a>
+        <a class="nav-pill" href="https://www.alinemfg.com/alignment-tolerances">Alignment tolerances</a>
+        <a class="nav-pill" href="https://www.alinemfg.com/horizontal-move">Horizontal move</a>
+        <a class="nav-pill" href="https://www.alinemfg.com/vertical-move">Vertical move</a>
+        <a class="nav-pill" href="https://www.alinemfg.com/soft-foot-check">Soft foot check</a>
+        <a class="nav-pill" href="https://www.alinemfg.com/sag-check">Sag check</a>
+        <a class="nav-pill" href="https://www.alinemfg.com/alignment-calculator">Alignment Calculator</a>
+      </div>
+    </nav>
+
+    <!-- Steps -->
+    <p class="section-label">Step-by-step procedure</p>
+
+    <div class="steps" role="list">
+
+      <div class="step" role="listitem">
+        <div class="step-num-col">
+          <div class="step-num">1</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <p class="step-title">
+            Familiarize with terms, techniques, and procedures
+            <span class="step-tag">Follow all safety rules</span>
+          </p>
+          <p class="step-desc">Understand the vocabulary, tools, and methods before beginning. Review the introduction for a full overview of reverse dial alignment principles.</p>
+          <a class="step-link" href="https://www.alinemfg.com/introduction">
+            Introduction to alignment
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="step" role="listitem">
+        <div class="step-num-col">
+          <div class="step-num">2</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <p class="step-title">Learn about the machine you are aligning</p>
+          <div class="step-desc">
+            <ul>
+              <li>Visually check coupling, pipe hangers, base bolts, and coupling spacing</li>
+              <li>Check for coupling and shaft run-out</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" role="listitem">
+        <div class="step-num-col">
+          <div class="step-num">3</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <p class="step-title">Know the characteristics of your tool</p>
+          <p class="step-desc">Perform a sag check to understand your indicator's deflection under its own weight before taking any measurements.</p>
+          <a class="step-link" href="https://www.alinemfg.com/sag-check">
+            Sag check instructions
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="step" role="listitem">
+        <div class="step-num-col">
+          <div class="step-num">4</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <p class="step-title">Prepare the machine</p>
+          <div class="step-desc">
+            <ul>
+              <li>Remove all existing shims — if reusing old shims, clean thoroughly and use the minimum amount possible</li>
+              <li>Clean the base thoroughly: scrape and file away all rust, nicks, and burrs</li>
+              <li>Examine base bolts and holes — re-tap or replace as necessary</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" role="listitem">
+        <div class="step-num-col">
+          <div class="step-num">5</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <p class="step-title">Install alignment brackets</p>
+          <div class="step-desc">
+            <ul>
+              <li>Clean the mounting surface and file off any nicks and burrs</li>
+              <li>Check indicators for sticking and loose needles</li>
+              <li>Aim the indicator stem directly toward the centerline of the shaft</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" role="listitem">
+        <div class="step-num-col">
+          <div class="step-num">6</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <p class="step-title">Take measurements</p>
+          <div class="step-desc">
+            <ul>
+              <li>Measure the distance between the two indicators</li>
+              <li>Measure the distance between the indicator and front feet</li>
+              <li>Measure the distance between front and back feet</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" role="listitem">
+        <div class="step-num-col">
+          <div class="step-num">7</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <p class="step-title">Lay out graph paper</p>
+          <div class="step-desc">
+            <ul>
+              <li>Mark indicator positions</li>
+              <li>Mark feet positions — include + and − signs to eliminate confusion</li>
+            </ul>
+          </div>
+          <div class="graph-wrap">
+            <img
+              src="https://static.wixstatic.com/media/faa96e_2258b4428985454695e5d3ecf5365e1d~mv2.jpeg/v1/fill/w_442,h_131,al_c,lg_1,q_90,enc_avif,quality_auto/layout_on_graph_paper.jpeg"
+              alt="Example graph paper layout showing indicator and feet positions"
+            />
+            <p class="img-caption">Example: graph layout for indicator and feet positions</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" role="listitem">
+        <div class="step-num-col">
+          <div class="step-num">8</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <p class="step-title">Preliminary horizontal move</p>
+          <p class="step-desc">Using your graph layout, determine and perform the initial horizontal correction before proceeding to other checks.</p>
+          <a class="step-link" href="https://www.alinemfg.com/horizontal-move">
+            Horizontal move instructions
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="step" role="listitem">
+        <div class="step-num-col">
+          <div class="step-num">9</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <p class="step-title">Check for soft foot</p>
+          <p class="step-desc">Identify and correct any soft foot condition before performing the vertical move. Skipping this step can cause inaccurate final readings.</p>
+          <a class="step-link" href="https://www.alinemfg.com/soft-foot-check">
+            Soft foot check instructions
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="step" role="listitem">
+        <div class="step-num-col">
+          <div class="step-num">10</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <p class="step-title">Perform the vertical move</p>
+          <p class="step-desc">Add or remove shims at the machine feet to achieve the correct vertical alignment as determined by your graph calculations.</p>
+          <a class="step-link" href="https://www.alinemfg.com/vertical-move">
+            Vertical move instructions
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="step" role="listitem">
+        <div class="step-num-col">
+          <div class="step-num">11</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <p class="step-title">Tighten all bolts and recheck indicator readings</p>
+          <p class="step-desc">Once the machine is in position, torque all base bolts to spec and verify that indicator readings remain within tolerance.</p>
+        </div>
+      </div>
+
+      <div class="step" role="listitem">
+        <div class="step-num-col">
+          <div class="step-num">12</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <p class="step-title">Remove alignment brackets</p>
+          <p class="step-desc">Carefully remove all alignment brackets and store them properly. The alignment job is complete.</p>
+        </div>
+      </div>
+
+    </div><!-- /steps -->
+
+    <!-- Closing -->
+    <div class="closing">
+      <p class="closing-text">The more familiar you become with these steps, the faster and more confidently you will be able to align your machinery.</p>
+
+      <p class="section-label">Contact</p>
+      <div class="contact-card">
+        <div>
+          <p class="contact-label">Email</p>
+          <p class="contact-val"><a href="mailto:info@alinemfg.com">info@alinemfg.com</a></p>
+        </div>
+        <div>
+          <p class="contact-label">Phone</p>
+          <p class="contact-val">512-778-5454</p>
+        </div>
+        <div>
+          <p class="contact-label">Mailing address</p>
+          <p class="contact-val">P.O. Box 177<br>Johnson City, TX 78636</p>
+        </div>
+      </div>
+
+      <p class="footer-note">© 2024 by ALine Mfg. &nbsp;·&nbsp; <a href="http://www.alinemfg.com">www.alinemfg.com</a></p>
+    </div>
+
+  </div><!-- /page -->
+</body>
+</html>
