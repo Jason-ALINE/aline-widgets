@@ -527,7 +527,7 @@ function computeAxis(o1, o2, xS, xM, xC, xFront, xBack){
   function offsetAt(x){ return offSet1 + slope*(x-xS); }
   return {
     couplingOffset: offsetAt(xC),
-    angleThouPerInch: slope*1000,
+    angleThouPerInch: slope, // offsets are already in .001", so slope is already .001"/in
     frontCorrection: -offsetAt(xFront),
     backCorrection: -offsetAt(xBack),
     slope
